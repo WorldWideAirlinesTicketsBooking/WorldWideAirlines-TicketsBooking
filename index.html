@@ -1,92 +1,5602 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World Wide Airlines Tickets Booking</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WorldWideAirlinesTicketsBooking - Flight Booking</title>
+
+    <meta name="description"
+        content="WorldWideAirlinesTicketsBooking - Search flights, explore worldwide destinations and plan your next journey.">
+
+    <style>
+        /* =========================================================
+           WORLDWIDE AIRLINES TICKETS BOOKING
+           COMPLETE SINGLE-FILE WEBSITE
+        ========================================================= */
+
+        :root {
+            --primary: #087fba;
+            --primary-dark: #064b75;
+            --navy: #032d43;
+            --navy-2: #00304d;
+            --orange: #ff8a00;
+            --orange-dark: #e57500;
+            --light: #f4f8fc;
+            --white: #ffffff;
+            --text: #202b33;
+            --muted: #687782;
+            --border: #dce5ea;
+            --success: #16834b;
+            --danger: #c62828;
+            --shadow: 0 12px 35px rgba(0, 35, 55, 0.10);
+            --radius: 18px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 3px 20px rgba(0, 0, 0, 0.08);
+            padding: 16px 6%;
+        }
+
+        .header-inner {
+            max-width: 1250px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-dark);
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .logo-icon {
+            font-size: 31px;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        nav a {
+            color: #263640;
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: .25s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            background: #edf8fc;
+        }
+
+        .header-call {
+            color: var(--primary-dark);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            min-height: 720px;
+            padding: 85px 5% 95px;
+
+            background:
+                radial-gradient(circle at 85% 15%, rgba(255, 138, 0, .20), transparent 28%),
+                radial-gradient(circle at 15% 20%, rgba(0, 180, 255, .18), transparent 30%),
+                linear-gradient(135deg, #00304d 0%, #087fba 55%, #032d43 100%);
+
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        .hero-text {
+            max-width: 850px;
+            margin: 0 auto 35px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .10);
+            backdrop-filter: blur(8px);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 66px);
+            line-height: 1.08;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 span {
+            color: #ffb84d;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 2vw, 20px);
+            color: #e7f7fd;
+            max-width: 760px;
+            margin: auto;
+        }
+
+        /* =========================================================
+           BOOKING ENGINE
+        ========================================================= */
+
+        .booking-box {
+            max-width: 1150px;
+            margin: auto;
+            padding: 28px;
+            background: rgba(255, 255, 255, .98);
+            color: var(--text);
+            border-radius: 22px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .25);
+        }
+
+        .trip-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .trip-types label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 14px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .trip-types label:hover {
+            border-color: var(--primary);
+        }
+
+        .trip-types input {
+            accent-color: var(--primary);
+        }
+
+        .booking-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .field {
+            position: relative;
+            min-width: 0;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #56636b;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            min-width: 0;
+            height: 50px;
+            padding: 0 13px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            background: white;
+            color: var(--text);
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(8, 127, 186, .10);
+        }
+
+        .airport-suggestions {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 78px;
+            z-index: 100;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: none;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .airport-suggestions.active {
+            display: block;
+        }
+
+        .airport-option {
+            width: 100%;
+            border: 0;
+            background: white;
+            padding: 12px 14px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            border-bottom: 1px solid #edf1f3;
+        }
+
+        .airport-option:hover {
+            background: #eef8fc;
+        }
+
+        .airport-main strong {
+            display: block;
+            color: var(--primary-dark);
+        }
+
+        .airport-main small {
+            color: var(--muted);
+        }
+
+        .airport-code {
+            font-weight: 900;
+            color: var(--orange-dark);
+        }
+
+        .swap-row {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .swap-btn {
+            border: 1px solid var(--border);
+            background: #f5fafc;
+            color: var(--primary-dark);
+            padding: 8px 14px;
+            border-radius: 9px;
+            font-weight: 800;
+        }
+
+        .swap-btn:hover {
+            background: #e8f5fa;
+        }
+
+        .search-btn {
+            grid-column: 1 / -1;
+            height: 54px;
+            border: 0;
+            border-radius: 11px;
+            background: linear-gradient(135deg, var(--orange), #ff9e2c);
+            color: white;
+            font-weight: 900;
+            font-size: 17px;
+            box-shadow: 0 10px 22px rgba(255, 138, 0, .25);
+            transition: .25s;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--orange-dark), var(--orange));
+        }
+
+        .search-btn.loading {
+            opacity: .75;
+            pointer-events: none;
+        }
+
+        .booking-note {
+            margin-top: 13px;
+            color: #72818a;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* =========================================================
+           GENERAL
+        ========================================================= */
+
+        section {
+            padding: 85px 6%;
+        }
+
+        .section-title {
+            max-width: 800px;
+            margin: 0 auto 45px;
+            text-align: center;
+        }
+
+        .section-kicker {
+            display: inline-block;
+            color: var(--orange-dark);
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 9px;
+        }
+
+        .section-title h2 {
+            color: var(--primary-dark);
+            font-size: clamp(30px, 4vw, 42px);
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: var(--muted);
+        }
+
+        /* =========================================================
+           RESULTS
+        ========================================================= */
+
+        .live-results-section {
+            display: none;
+            background: #eef5f8;
+        }
+
+        .live-results-section.active {
+            display: block;
+        }
+
+        .results-toolbar {
+            max-width: 1150px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .results-summary {
+            color: var(--muted);
+        }
+
+        .results-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .results-controls select {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+        }
+
+        .results-list {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            gap: 16px;
+        }
+
+        .flight-card {
+            background: white;
+            border-radius: 15px;
+            padding: 22px;
+            box-shadow: 0 7px 24px rgba(0, 35, 55, .07);
+            border: 1px solid #e5edf1;
+        }
+
+        .flight-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .airline-name {
+            font-weight: 900;
+            color: var(--primary-dark);
+        }
+
+        .flight-number {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .flight-route {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 18px;
+            align-items: center;
+            margin: 22px 0;
+        }
+
+        .flight-point strong {
+            display: block;
+            font-size: 23px;
+            color: #162c38;
+        }
+
+        .flight-point small {
+            color: var(--muted);
+        }
+
+        .flight-point:last-child {
+            text-align: right;
+        }
+
+        .route-line {
+            text-align: center;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .flight-price {
+            text-align: right;
+        }
+
+        .flight-price strong {
+            display: block;
+            font-size: 24px;
+            color: var(--orange-dark);
+        }
+
+        .flight-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .flight-meta span {
+            background: #f3f7f9;
+            border-radius: 999px;
+            padding: 6px 10px;
+        }
+
+        .select-flight-btn {
+            margin-top: 16px;
+            width: 100%;
+            border: 0;
+            padding: 12px;
+            border-radius: 9px;
+            background: var(--primary);
+            color: white;
+            font-weight: 800;
+        }
+
+        .select-flight-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .empty-results {
+            max-width: 800px;
+            margin: auto;
+            padding: 40px 25px;
+            background: white;
+            border-radius: 16px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        /* =========================================================
+           DESTINATIONS
+        ========================================================= */
+
+        .destinations {
+            background: white;
+        }
+
+        .destination-tools {
+            max-width: 1150px;
+            margin: 0 auto 28px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .destination-search {
+            width: min(600px, 100%);
+            height: 50px;
+            padding: 0 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .destination-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .destination-card {
+            background: white;
+            border: 1px solid #e6edf1;
+            border-radius: 17px;
+            overflow: hidden;
+            box-shadow: 0 7px 24px rgba(0, 35, 55, .07);
+            transition: .25s;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 16px 35px rgba(0, 35, 55, .13);
+        }
+
+        .destination-image {
+            height: 185px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            background:
+                radial-gradient(circle at 30% 30%, #ffffff, transparent 25%),
+                linear-gradient(135deg, #dff5ff, #a9def2);
+        }
+
+        .destination-content {
+            padding: 22px;
+        }
+
+        .destination-content h3 {
+            color: var(--primary-dark);
+            font-size: 23px;
+            margin-bottom: 6px;
+        }
+
+        .destination-content p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        .destination-price {
+            color: var(--orange-dark);
+            font-weight: 900;
+            margin-bottom: 14px;
+        }
+
+        .details-btn {
+            border: 0;
+            background: var(--primary);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 800;
+        }
+
+        .details-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .show-all-btn {
+            display: block;
+            margin: 32px auto 0;
+            border: 1px solid var(--primary);
+            background: white;
+            color: var(--primary-dark);
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-weight: 800;
+        }
+
+        .show-all-btn:hover {
+            background: #edf8fc;
+        }
+
+        /* =========================================================
+           AIRLINES
+        ========================================================= */
+
+        .airlines {
+            background: #f4f8fc;
+        }
+
+        .airline-search-wrap {
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+
+        .airline-search {
+            width: 100%;
+            height: 50px;
+            padding: 0 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .airline-directory {
+            max-width: 1200px;
+            margin: auto;
+            columns: 4 220px;
+            column-gap: 25px;
+        }
+
+        .airline-item {
+            break-inside: avoid;
+            margin-bottom: 9px;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e6edf1;
+            color: #344852;
+            font-weight: 700;
+        }
+
+        .airline-item:hover {
+            color: var(--primary);
+            border-color: #b7dfea;
+        }
+
+        /* =========================================================
+           WHY CHOOSE US
+        ========================================================= */
+
+        .features {
+            background: white;
+        }
+
+        .feature-grid {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            background: #f7fafc;
+            border: 1px solid #e7eef2;
+            border-radius: 17px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: .25s;
+        }
+
+        .feature:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 43px;
+            margin-bottom: 13px;
+        }
+
+        .feature h3 {
+            color: var(--primary-dark);
+            margin-bottom: 9px;
+        }
+
+        .feature p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* =========================================================
+           ABOUT
+        ========================================================= */
+
+        .about {
+            background: linear-gradient(135deg, var(--primary-dark), var(--navy));
+            color: white;
+        }
+
+        .about-container {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-label {
+            display: inline-block;
+            color: #ffb84d;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .about h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            line-height: 1.12;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            color: #d8edf7;
+            margin-bottom: 15px;
+        }
+
+        .about-box {
+            background: rgba(255, 255, 255, .10);
+            border: 1px solid rgba(255, 255, 255, .16);
+            border-radius: 22px;
+            padding: 45px 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .about-box .plane {
+            font-size: 75px;
+            margin-bottom: 15px;
+        }
+
+        /* =========================================================
+           PAYMENT
+        ========================================================= */
+
+        .payment {
+            background: #f4f8fc;
+        }
+
+        .payment-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .payment-card {
+            background: white;
+            border: 1px solid #e3ebef;
+            border-radius: 17px;
+            padding: 27px;
+            box-shadow: 0 6px 22px rgba(0, 35, 55, .06);
+        }
+
+        .payment-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .payment-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .payment-card > p {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .bank-details {
+            display: grid;
+            gap: 10px;
+        }
+
+        .bank-row {
+            padding: 10px 0;
+            border-bottom: 1px solid #edf1f3;
+        }
+
+        .bank-row span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .bank-row strong {
+            color: #263a45;
+            word-break: break-word;
+        }
+
+        .copy-btn,
+        .payment-action {
+            width: 100%;
+            border: 0;
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 9px;
+            background: var(--primary);
+            color: white;
+            font-weight: 800;
+        }
+
+        .copy-btn:hover,
+        .payment-action:hover {
+            background: var(--primary-dark);
+        }
+
+        .payment-form input,
+        .payment-form select,
+        .payment-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .payment-form textarea {
+            resize: vertical;
+        }
+
+        .payment-note {
+            max-width: 1150px;
+            margin: 25px auto 0;
+            padding: 16px 18px;
+            background: #fff9ed;
+            border: 1px solid #f2d49d;
+            color: #76520d;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        /* =========================================================
+           CONTACT
+        ========================================================= */
+
+        .contact {
+            background: white;
+        }
+
+        .contact-container {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .contact-info,
+        .contact-form {
+            background: #f7fafc;
+            padding: 32px;
+            border: 1px solid #e6edf1;
+            border-radius: 17px;
+            box-shadow: 0 6px 20px rgba(0, 35, 55, .05);
+        }
+
+        .contact-info h3,
+        .contact-form h3 {
+            color: var(--primary-dark);
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+
+        .contact-info > p {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 13px;
+            margin: 19px 0;
+        }
+
+        .contact-icon {
+            font-size: 25px;
+        }
+
+        .contact-item strong {
+            color: var(--primary-dark);
+        }
+
+        .contact-item p {
+            color: var(--muted);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 13px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+        }
+
+        .send-btn {
+            width: 100%;
+            padding: 13px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--primary);
+            color: white;
+            font-weight: 800;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* =========================================================
+           FAQ
+        ========================================================= */
+
+        .faq {
+            background: #f4f8fc;
+        }
+
+        .faq-list {
+            max-width: 900px;
+            margin: auto;
+            display: grid;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid #e4ebef;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 17px 18px;
+            border: 0;
+            background: white;
+            text-align: left;
+            color: var(--primary-dark);
+            font-weight: 800;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 18px 18px;
+            color: var(--muted);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* =========================================================
+           MODALS
+        ========================================================= */
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(0, 0, 0, .72);
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-panel {
+            width: min(900px, 100%);
+            max-height: 92vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 16px;
+            top: 10px;
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 50%;
+            background: #edf2f4;
+            color: #44545c;
+            font-size: 24px;
+        }
+
+        .modal-panel h2 {
+            color: var(--primary-dark);
+            margin-bottom: 14px;
+        }
+
+        .modal-panel h3 {
+            color: var(--primary);
+            margin: 20px 0 7px;
+        }
+
+        .modal-panel p {
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        /* =========================================================
+           PASSENGER FORM
+        ========================================================= */
+
+        .passenger-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .passenger-block {
+            border: 1px solid #e1e9ed;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 12px 0;
+        }
+
+        .passenger-block h4 {
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .passenger-block input,
+        .passenger-block select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .passenger-ages {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .passenger-ages label {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--muted);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .secondary-btn,
+        .primary-btn {
+            border: 0;
+            padding: 11px 17px;
+            border-radius: 9px;
+            font-weight: 800;
+        }
+
+        .secondary-btn {
+            background: #edf2f4;
+            color: #394a53;
+        }
+
+        .primary-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .booking-confirmation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #eef9f2;
+            border: 1px solid #a9d9ba;
+            border-radius: 10px;
+            color: #24613b;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            background: var(--navy);
+            color: white;
+            padding: 50px 6% 20px;
+        }
+
+        .footer-grid {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 14px;
+        }
+
+        .footer-column p,
+        .footer-column a {
+            display: block;
+            color: #b9d0dc;
+            margin-bottom: 8px;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1150px;
+            margin: 35px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, .14);
+            text-align: center;
+            color: #9bb3c0;
+            font-size: 13px;
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 5000;
+            max-width: 350px;
+            padding: 14px 17px;
+            background: #162d38;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .2);
+            transform: translateY(130px);
+            opacity: 0;
+            transition: .3s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+            .header-inner {
+                flex-direction: column;
+            }
+
+            .header-call {
+                display: none;
+            }
+
+            .booking-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .destination-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .payment-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 13px 4%;
+            }
+
+            .logo {
+                font-size: 19px;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .logo-icon {
+                font-size: 24px;
+            }
+
+            nav {
+                gap: 2px;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 6px 7px;
+            }
+
+            .hero {
+                padding: 55px 4% 65px;
+            }
+
+            .booking-box {
+                padding: 18px 14px;
+            }
+
+            .trip-types {
+                flex-direction: column;
+            }
+
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .destination-grid,
+            .feature-grid,
+            .payment-grid,
+            .contact-container,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flight-route {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .flight-point:last-child {
+                text-align: left;
+            }
+
+            .route-line {
+                text-align: left;
+            }
+
+            .flight-top {
+                flex-direction: column;
+            }
+
+            .flight-price {
+                text-align: left;
+            }
+
+            .passenger-grid,
+            .passenger-ages {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 65px 4%;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<nav>
-    <div class="logo">✈ World Wide Airlines</div>
-    <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#destinations">Destinations</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
 
-<header id="home">
-    <div class="hero">
-        <h1>Book Flights Worldwide</h1>
-        <p>Your Trusted Partner for Domestic & International Travel</p>
-        <a href="#contact" class="btn">Book Your Flight</a>
-    </div>
-</header>
+    <header>
+        <div class="header-inner">
 
-<section class="why-us">
-    <h2>Why Choose Us?</h2>
-    <div class="features">
-        <div class="feature">✓ Best Airfares</div>
-        <div class="feature">✓ Fast Booking Support</div>
-        <div class="feature">✓ Worldwide Destinations</div>
-        <div class="feature">✓ Customer Satisfaction</div>
-    </div>
-</section>
+            <a href="#home" class="logo">
+                <span class="logo-icon">✈️</span>
+                <span>WorldWideAirlinesTicketsBooking</span>
+            </a>
 
-<section id="services">
-    <h2>Our Services</h2>
-    <div class="cards">
-        <div class="card">
-            <h3>Flight Reservations</h3>
-            <p>Book domestic and international flights.</p>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#destinations">Destinations</a>
+                <a href="#airlines">Airlines</a>
+                <a href="#about">About</a>
+                <a href="#payment">Payment</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <a class="header-call" href="tel:+447391436364">
+                📞 +447391436364
+            </a>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================================
+         HERO + BOOKING
+    ========================================================= -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <div class="hero-text">
+
+                <div class="hero-badge">
+                    🌍 WORLDWIDE FLIGHT BOOKING
+                </div>
+
+                <h1>
+                    Book Your <span>Perfect Flight</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Search flights, discover worldwide destinations,
+                    compare travel options and plan your next journey.
+                </p>
+
+            </div>
+
+
+            <div class="booking-box">
+
+                <div class="trip-types">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="trip"
+                            value="round_trip"
+                            checked
+                        >
+                        Round Trip
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="trip"
+                            value="one_way"
+                        >
+                        One Way
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="trip"
+                            value="multi_city"
+                        >
+                        Multi-City
+                    </label>
+
+                </div>
+
+
+                <div class="booking-grid">
+
+                    <div class="field">
+
+                        <label>From</label>
+
+                        <input
+                            type="text"
+                            id="from"
+                            placeholder="City or airport"
+                            autocomplete="off"
+                        >
+
+                        <div
+                            id="fromSuggestions"
+                            class="airport-suggestions"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>To</label>
+
+                        <input
+                            type="text"
+                            id="to"
+                            placeholder="City or airport"
+                            autocomplete="off"
+                        >
+
+                        <div
+                            id="toSuggestions"
+                            class="airport-suggestions"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Departure</label>
+
+                        <input
+                            type="date"
+                            id="departure"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Return</label>
+
+                        <input
+                            type="date"
+                            id="returnDate"
+                        >
+
+                    </div>
+
+
+                    <div class="swap-row">
+
+                        <button
+                            type="button"
+                            class="swap-btn"
+                            onclick="swapAirports()"
+                        >
+                            ⇄ Swap Airports
+                        </button>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Adults</label>
+
+                        <select id="Adults">
+
+                            <option value="1">1 Adult</option>
+                            <option value="2">2 Adults</option>
+                            <option value="3">3 Adults</option>
+                            <option value="4">4 Adults</option>
+                            <option value="5">5 Adults</option>
+                            <option value="6">6 Adults</option>
+                            <option value="7">7 Adults</option>
+                            <option value="8">8 Adults</option>
+                            <option value="9">9 Adults</option>
+                            <option value="10">10 Adults</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Youths</label>
+
+                        <select id="Youths">
+
+                            <option value="0">0 Youths</option>
+                            <option value="1">1 Youth</option>
+                            <option value="2">2 Youths</option>
+                            <option value="3">3 Youths</option>
+                            <option value="4">4 Youths</option>
+                            <option value="5">5 Youths</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Children</label>
+
+                        <select id="Childrens">
+
+                            <option value="0">0 Children</option>
+                            <option value="1">1 Child</option>
+                            <option value="2">2 Children</option>
+                            <option value="3">3 Children</option>
+                            <option value="4">4 Children</option>
+                            <option value="5">5 Children</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Infants</label>
+
+                        <select id="Infants">
+
+                            <option value="0">0 Infants</option>
+                            <option value="1">1 Infant</option>
+                            <option value="2">2 Infants</option>
+                            <option value="3">3 Infants</option>
+                            <option value="4">4 Infants</option>
+                            <option value="5">5 Infants</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Cabin Class</label>
+
+                        <select id="cabinClass">
+
+                            <option value="Economy">Economy</option>
+                            <option value="Premium Economy">Premium Economy</option>
+                            <option value="Business">Business</option>
+                            <option value="First Class">First Class</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Airline</label>
+
+                        <select id="airline">
+                            <option value="">Any Airline</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Promo Code</label>
+
+                        <input
+                            type="text"
+                            id="promoCode"
+                            placeholder="Optional"
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="searchButton"
+                        class="search-btn"
+                        onclick="searchFlights()"
+                    >
+                        🔎 Search Flights
+                    </button>
+
+                </div>
+
+
+                <p class="booking-note">
+                    Flight search and ticket issuance require connection
+                    to an authorized flight provider/API and secure backend.
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>Group Travel</h3>
-            <p>Family, business and corporate bookings.</p>
+    </section>
+
+
+    <!-- =========================================================
+         LIVE RESULTS
+    ========================================================= -->
+
+    <section
+        class="live-results-section"
+        id="flightResultsSection"
+    >
+
+        <div class="section-title">
+
+            <span class="section-kicker">
+                Flight Search
+            </span>
+
+            <h2>Available Flight Results</h2>
+
+            <p>
+                Review the available options returned by your flight
+                provider connection.
+            </p>
+
         </div>
 
-        <div class="card">
-            <h3>Travel Assistance</h3>
-            <p>Professional support throughout your journey.</p>
+
+        <div class="results-toolbar">
+
+            <div
+                id="resultsSummary"
+                class="results-summary"
+            ></div>
+
+            <div class="results-controls">
+
+                <select id="sortFlights">
+                    <option value="price">Sort by Price</option>
+                    <option value="duration">Sort by Duration</option>
+                    <option value="departure">Sort by Departure</option>
+                </select>
+
+                <select id="maxConnections">
+                    <option value="">Any Stops</option>
+                    <option value="0">Nonstop</option>
+                    <option value="1">Up to 1 Stop</option>
+                    <option value="2">Up to 2 Stops</option>
+                </select>
+
+            </div>
+
         </div>
+
+
+        <div
+            id="resultsList"
+            class="results-list"
+        ></div>
+
+    </section>
+
+
+    <!-- =========================================================
+         DESTINATIONS
+    ========================================================= -->
+
+    <section
+        class="destinations"
+        id="destinations"
+    >
+
+        <div class="section-title">
+
+            <span class="section-kicker">
+                Explore The World
+            </span>
+
+            <h2>Popular Worldwide Destinations</h2>
+
+            <p>
+                Discover cities, cultures, landmarks and unforgettable
+                travel experiences around the world.
+            </p>
+
+        </div>
+
+
+        <div class="destination-tools">
+
+            <input
+                type="search"
+                id="destinationSearch"
+                class="destination-search"
+                placeholder="🔎 Search destinations..."
+                oninput="renderDestinations()"
+            >
+
+        </div>
+
+
+        <div
+            id="destinationGrid"
+            class="destination-grid"
+        ></div>
+
+
+        <button
+            type="button"
+            class="show-all-btn"
+            onclick="showAllDestinations()"
+        >
+            View All Destinations
+        </button>
+
+    </section>
+
+
+    <!-- =========================================================
+         AIRLINES
+    ========================================================= -->
+
+    <section
+        class="airlines"
+        id="airlines"
+    >
+
+        <div class="section-title">
+
+            <span class="section-kicker">
+                Airline Directory
+            </span>
+
+            <h2>Worldwide Airlines A–Z</h2>
+
+            <p>
+                Browse the airline directory or search for an airline.
+            </p>
+
+        </div>
+
+
+        <div class="airline-search-wrap">
+
+            <input
+                type="search"
+                id="airlineSearch"
+                class="airline-search"
+                placeholder="🔎 Search airline..."
+                oninput="renderAirlineDirectory()"
+            >
+
+        </div>
+
+
+        <div
+            id="airlineDirectory"
+            class="airline-directory"
+        ></div>
+
+    </section>
+
+
+    <!-- =========================================================
+         WHY CHOOSE US
+    ========================================================= -->
+
+    <section class="features">
+
+        <div class="section-title">
+
+            <span class="section-kicker">
+                Travel With Confidence
+            </span>
+
+            <h2>Why Choose Us?</h2>
+
+            <p>
+                Designed to make flight planning simple and convenient.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <div class="feature">
+
+                <div class="feature-icon">🌍</div>
+
+                <h3>Worldwide Destinations</h3>
+
+                <p>
+                    Explore destinations across major regions,
+                    cities and international travel hubs.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">✈️</div>
+
+                <h3>Flight Search</h3>
+
+                <p>
+                    Search using departure, destination, dates,
+                    passengers, cabin and airline preferences.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">🔒</div>
+
+                <h3>Secure Process</h3>
+
+                <p>
+                    Payment and booking systems can be connected
+                    through secure authorized providers.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">💬</div>
+
+                <h3>Travel Support</h3>
+
+                <p>
+                    Contact our team for questions about flights,
+                    destinations and booking assistance.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         ABOUT
+    ========================================================= -->
+
+    <section
+        class="about"
+        id="about"
+    >
+
+        <div class="about-container">
+
+            <div>
+
+                <span class="about-label">
+                    ABOUT US
+                </span>
+
+                <h2>
+                    Your Travel Partner For Worldwide Journeys
+                </h2>
+
+                <p>
+                    WorldWideAirlinesTicketsBooking is a modern
+                    flight-booking website designed to make travel
+                    planning simple and convenient.
+                </p>
+
+                <p>
+                    Visitors can search for flights, explore worldwide
+                    destinations and learn about popular places around
+                    the world.
+                </p>
+
+                <p>
+                    The website can be connected to a real flight
+                    inventory and booking system through an appropriate
+                    backend and authorized flight API.
+                </p>
+
+            </div>
+
+
+            <div class="about-box">
+
+                <div class="plane">
+                    ✈️
+                </div>
+
+                <h3>
+                    Explore The World
+                </h3>
+
+                <p>
+                    Your next adventure starts here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         PAYMENT
+    ========================================================= -->
+
+    <section
+        class="payment"
+        id="payment"
+    >
+
+        <div class="section-title">
+
+            <span class="section-kicker">
+                Booking Payment
+            </span>
+
+            <h2>Secure Booking & Payment</h2>
+
+            <p>
+                Choose your payment method and follow the instructions
+                provided for your booking.
+            </p>
+
+        </div>
+
+
+        <div class="payment-grid">
+
+            <!-- BANK TRANSFER -->
+
+            <div class="payment-card">
+
+                <div class="payment-icon">🏦</div>
+
+                <h3>Bank Transfer</h3>
+
+                <p>
+                    Use your business banking details for manual
+                    booking payments.
+                </p>
+
+
+                <div class="bank-details">
+
+                    <div class="bank-row">
+                        <span>Account Name</span>
+                        <strong id="accountName">
+                            YOUR BUSINESS NAME
+                        </strong>
+                    </div>
+
+                    <div class="bank-row">
+                        <span>Bank Name</span>
+                        <strong id="bankName">
+                            YOUR BANK NAME
+                        </strong>
+                    </div>
+
+                    <div class="bank-row">
+                        <span>IBAN</span>
+                        <strong id="iban">
+                            YOUR IBAN HERE
+                        </strong>
+                    </div>
+
+                    <div class="bank-row">
+                        <span>Account Number</span>
+                        <strong id="accountNumber">
+                            YOUR ACCOUNT NUMBER
+                        </strong>
+                    </div>
+
+                    <div class="bank-row">
+                        <span>SWIFT / BIC</span>
+                        <strong id="swift">
+                            YOUR SWIFT / BIC
+                        </strong>
+                    </div>
+
+                    <div class="bank-row">
+                        <span>Payment Reference</span>
+                        <strong>
+                            BOOKING-XXXX
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="copy-btn"
+                    onclick="copyIBAN()"
+                >
+                    📋 Copy IBAN
+                </button>
+
+            </div>
+
+
+            <!-- SECURE GATEWAY -->
+
+            <div class="payment-card">
+
+                <div class="payment-icon">💳</div>
+
+                <h3>Secure Card Payment</h3>
+
+                <p>
+                    Connect the website to Stripe, PayPal or your
+                    bank's merchant gateway before accepting real
+                    card payments.
+                </p>
+
+                <button
+                    type="button"
+                    class="payment-action"
+                    onclick="startSecurePayment()"
+                >
+                    🔐 Connect Secure Gateway
+                </button>
+
+            </div>
+
+
+            <!-- PAYMENT CONFIRMATION -->
+
+            <div class="payment-card">
+
+                <div class="payment-icon">📄</div>
+
+                <h3>Payment Confirmation</h3>
+
+                <form
+                    class="payment-form"
+                    onsubmit="submitPaymentDetails(event)"
+                >
+
+                    <input
+                        type="text"
+                        id="paymentBookingReference"
+                        placeholder="Booking Reference"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="paymentFullName"
+                        placeholder="Full Name"
+                        required
+                    >
+
+                    <input
+                        type="email"
+                        id="paymentEmail"
+                        placeholder="Email Address"
+                        required
+                    >
+
+                    <input
+                        type="tel"
+                        id="paymentPhone"
+                        placeholder="Phone Number"
+                        required
+                    >
+
+                    <input
+                        type="number"
+                        id="paymentAmount"
+                        placeholder="Payment Amount"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+                    <select
+                        id="paymentMethod"
+                        required
+                    >
+                        <option value="">
+                            Select Payment Method
+                        </option>
+                        <option value="Bank Transfer">
+                            Bank Transfer
+                        </option>
+                        <option value="PayPal">
+                            PayPal
+                        </option>
+                        <option value="Card Gateway">
+                            Card Gateway
+                        </option>
+                        <option value="Other">
+                            Other
+                        </option>
+                    </select>
+
+                    <input
+                        type="text"
+                        id="transactionId"
+                        placeholder="Transaction ID"
+                        required
+                    >
+
+                    <textarea
+                        id="paymentNotes"
+                        rows="3"
+                        placeholder="Additional notes"
+                    ></textarea>
+
+                    <button
+                        type="submit"
+                        class="payment-action"
+                    >
+                        Submit Payment Details
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <div class="payment-note">
+
+            <strong>Important:</strong>
+            The bank details above are placeholders.
+            Replace them with your actual business banking details
+            before publishing the website.
+
+            Never place your banking password, PIN, OTP or other
+            private security credentials on a public website.
+
+            This front-end form does not itself process or verify
+            payments. Connect it to a secure backend/payment gateway
+            before accepting real payments.
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         FAQ
+    ========================================================= -->
+
+    <section
+        class="faq"
+        id="faq"
+    >
+
+        <div class="section-title">
+
+            <span class="section-kicker">
+                Help Center
+            </span>
+
+            <h2>Frequently Asked Questions</h2>
+
+            <p>
+                Common questions about flights, booking and payments.
+            </p>
+
+        </div>
+
+
+        <div class="faq-list">
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question"
+                    type="button"
+                    onclick="toggleFAQ(this)"
+                >
+                    Can I search for round-trip flights?
+                    <span>+</span>
+                </button>
+
+                <div class="faq-answer">
+                    Yes. Select Round Trip and enter your departure
+                    and return dates before searching.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question"
+                    type="button"
+                    onclick="toggleFAQ(this)"
+                >
+                    Can I search one-way flights?
+                    <span>+</span>
+                </button>
+
+                <div class="faq-answer">
+                    Yes. Select One Way. The return-date field will
+                    automatically be disabled.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question"
+                    type="button"
+                    onclick="toggleFAQ(this)"
+                >
+                    Does this website currently issue real tickets?
+                    <span>+</span>
+                </button>
+
+                <div class="faq-answer">
+                    The current HTML is a front-end booking interface.
+                    Real-time inventory, reservations, payment processing
+                    and ticket issuance require an authorized flight API,
+                    secure backend and payment provider.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question"
+                    type="button"
+                    onclick="toggleFAQ(this)"
+                >
+                    Can I add my own bank payment details?
+                    <span>+</span>
+                </button>
+
+                <div class="faq-answer">
+                    Yes. Replace the bank-transfer placeholders in the
+                    payment section with your legitimate business
+                    banking details before publishing.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question"
+                    type="button"
+                    onclick="toggleFAQ(this)"
+                >
+                    Can the website be connected to a flight API?
+                    <span>+</span>
+                </button>
+
+                <div class="faq-answer">
+                    Yes. The JavaScript is structured so that a backend
+                    endpoint such as /api/flights/search can later be
+                    connected to an authorized flight provider.
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         CONTACT
+    ========================================================= -->
+
+    <section
+        class="contact"
+        id="contact"
+    >
+
+        <div class="section-title">
+
+            <span class="section-kicker">
+                Contact Us
+            </span>
+
+            <h2>We're Here To Help</h2>
+
+            <p>
+                Contact us for information about flights,
+                destinations and bookings.
+            </p>
+
+        </div>
+
+
+        <div class="contact-container">
+
+            <div class="contact-info">
+
+                <h3>Get In Touch</h3>
+
+                <p>
+                    Our website is designed to help travelers
+                    plan international journeys.
+                </p>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📍
+                    </div>
+
+                    <div>
+
+                        <strong>Address</strong>
+
+                        <p>
+                            123 Main Street,
+                            Islamabad, Pakistan
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📞
+                    </div>
+
+                    <div>
+
+                        <strong>Phone</strong>
+
+                        <p>
+                            <a href="tel:+447391436364">
+                                +447391436364
+                            </a>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📧
+                    </div>
+
+                    <div>
+
+                        <strong>Email</strong>
+
+                        <p>
+                   <ahref="mailto:worldwideairlinesticketsbookin@gmail.com">
+                                worldwideairlinesticketsbookin@gmail.com
+                            </a>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        🕐
+                    </div>
+
+                    <div>
+
+                        <strong>Working Hours</strong>
+
+                        <p>
+                            Monday - Saturday
+                            <br>
+                            9:00 AM - 6:00 PM
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-form">
+
+                <h3>Send Us a Message</h3>
+
+                <form onsubmit="sendMessage(event)">
+
+                    <input
+                        type="text"
+                        id="contactName"
+                        placeholder="Your Name"
+                        required
+                    >
+
+                    <input
+                        type="email"
+                        id="contactEmail"
+                        placeholder="Your Email"
+                        required
+                    >
+
+                    <input
+                        type="tel"
+                        id="contactPhone"
+                        placeholder="Phone Number"
+                    >
+
+                    <textarea
+                        id="contactMessage"
+                        rows="6"
+                        placeholder="Your Message"
+                        required
+                    ></textarea>
+
+                    <button
+                        class="send-btn"
+                        type="submit"
+                    >
+                        Send Message
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
+    <footer>
+
+        <div class="footer-grid">
+
+            <div class="footer-column">
+
+                <h3>
+                    ✈️ WorldWideAirlinesTicketsBooking
+                </h3>
+
+                <p>
+                    Your travel partner for discovering destinations
+                    around the world.
+                </p>
+
+                <p>
+                    Search flights, explore destinations and plan
+                    your next journey.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>Quick Links</h3>
+
+                <a href="#home">Home</a>
+                <a href="#destinations">Destinations</a>
+                <a href="#airlines">Airlines</a>
+                <a href="#about">About</a>
+                <a href="#payment">Payment</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>Contact</h3>
+
+                <p>
+                    📍 Islamabad, Pakistan
+                </p>
+
+                <p>
+                    📞 +447391436364
+                </p>
+
+                <p>
+                    📧 worldwideairlinesticketsbookin@gmail.com
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © <span id="currentYear">2026</span>
+                WorldWideAirlinesTicketsBooking.
+                All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         DESTINATION MODAL
+    ========================================================= -->
+
+    <div
+        id="destinationModal"
+        class="modal-overlay"
+        onclick="closeDestinationOnBackdrop(event)"
+    >
+
+        <div class="modal-panel">
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeDestination()"
+            >
+                ×
+            </button>
+
+            <div id="destinationText"></div>
+
+        </div>
+
     </div>
-</section>
 
-<section id="destinations">
-    <h2>Popular Destinations</h2>
-    <div class="cards">
-        <div class="card">Dubai 🇦🇪</div>
-        <div class="card">Istanbul 🇹🇷</div>
-        <div class="card">London 🇬🇧</div>
-        <div class="card">Toronto 🇨🇦</div>
-        <div class="card">Jeddah 🇸🇦</div>
-        <div class="card">Bangkok 🇹🇭</div>
+
+    <!-- =========================================================
+         PASSENGER MODAL
+    ========================================================= -->
+
+    <div
+        id="passengerModal"
+        class="modal-overlay"
+    >
+
+        <div class="modal-panel">
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closePassengerModal()"
+            >
+                ×
+            </button>
+
+            <h2>
+                Passenger Information
+            </h2>
+
+            <p>
+                Enter passenger information to continue with
+                the booking hold process.
+            </p>
+
+
+            <form
+                id="passengerForm"
+                onsubmit="submitBookingHold(event)"
+            >
+
+                <div id="passengerFields"></div>
+
+                <div
+                    id="passengerAges"
+                    class="passenger-ages"
+                ></div>
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="closePassengerModal()"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Continue Booking
+                    </button>
+
+                </div>
+
+            </form>
+
+            <div
+                id="bookingConfirmation"
+                class="booking-confirmation"
+                style="display:none;"
+            ></div>
+
+        </div>
+
     </div>
-</section>
 
-<section id="contact">
-    <h2>Contact Us</h2>
 
-    <form id="bookingForm">
-        <input type="text" placeholder="Full Name" required>
-        <input type="email" placeholder="Email Address" required>
-        <input type="text" placeholder="Departure City" required>
-        <input type="text" placeholder="Destination" required>
-        <button type="submit">Submit Inquiry</button>
-    </form>
+    <!-- =========================================================
+         TOAST
+    ========================================================= -->
 
-    <p id="message"></p>
-</section>
+    <div
+        id="toast"
+        class="toast"
+    ></div>
 
-<footer>
-    <p>© 2026 World Wide Airlines Tickets Booking | All Rights Reserved</p>
-</footer>
 
-<script src="script.js"></script>
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+        /* =========================================================
+           HELPERS
+        ========================================================= */
+
+        function escapeHtml(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        function showToast(message) {
+
+            const toast =
+                document.getElementById("toast");
+
+            if (!toast) return;
+
+            toast.textContent = message;
+
+            toast.classList.add("show");
+
+            clearTimeout(window.toastTimer);
+
+            window.toastTimer =
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 3200);
+
+        }
+
+
+        /* =========================================================
+           AIRLINES
+        ========================================================= */
+
+        const airlines = [
+
+            "Aegean Airlines",
+            "Aer Lingus",
+            "Aeroflot",
+            "Air Algérie",
+            "Air Arabia",
+            "Air Astana",
+            "Air Canada",
+            "Air China",
+            "Air France",
+            "Air India",
+            "Air Mauritius",
+            "Air New Zealand",
+            "Air Peace",
+            "Air Serbia",
+            "Air Seychelles",
+            "Air Tanzania",
+            "AirAsia",
+            "Alaska Airlines",
+            "Alitalia",
+            "American Airlines",
+            "ANA",
+            "Asiana Airlines",
+            "Austrian Airlines",
+            "Avianca",
+            "Azul Brazilian Airlines",
+            "Batik Air",
+            "British Airways",
+            "Brussels Airlines",
+            "Cathay Pacific",
+            "China Airlines",
+            "China Eastern Airlines",
+            "China Southern Airlines",
+            "Condor",
+            "Copa Airlines",
+            "Croatia Airlines",
+            "Delta Air Lines",
+            "EgyptAir",
+            "EL AL",
+            "Emirates",
+            "Ethiopian Airlines",
+            "Etihad Airways",
+            "Eurowings",
+            "EVA Air",
+            "Finnair",
+            "Flydubai",
+            "Frontier Airlines",
+            "Garuda Indonesia",
+            "Gulf Air",
+            "Hainan Airlines",
+            "Hawaiian Airlines",
+            "Iberia",
+            "Icelandair",
+            "IndiGo",
+            "ITA Airways",
+            "Japan Airlines",
+            "Jeju Air",
+            "JetBlue",
+            "Kenya Airways",
+            "KLM Royal Dutch Airlines",
+            "Korean Air",
+            "Kuwait Airways",
+            "LATAM Airlines",
+            "LOT Polish Airlines",
+            "Lufthansa",
+            "Malaysia Airlines",
+            "Middle East Airlines",
+            "Nile Air",
+            "Oman Air",
+            "Pakistan International Airlines",
+            "Pegasus Airlines",
+            "Philippine Airlines",
+            "Qantas",
+            "Qatar Airways",
+            "Royal Air Maroc",
+            "Royal Brunei Airlines",
+            "Royal Jordanian",
+            "RwandAir",
+            "Saudia",
+            "Scandinavian Airlines",
+            "Scoot",
+            "Singapore Airlines",
+            "South African Airways",
+            "Southwest Airlines",
+            "SriLankan Airlines",
+            "SWISS",
+            "TAP Air Portugal",
+            "Thai Airways",
+            "Turkish Airlines",
+            "United Airlines",
+            "Uzbekistan Airways",
+            "Vietnam Airlines",
+            "Virgin Atlantic",
+            "Vistara",
+            "WestJet",
+            "Wizz Air",
+            "XiamenAir"
+        ];
+
+        airlines.sort((a, b) =>
+            a.localeCompare(b)
+        );
+
+
+        function loadAirlines() {
+
+            const select =
+                document.getElementById("airline");
+
+            if (!select) return;
+
+            select.innerHTML =
+                '<option value="">Any Airline</option>';
+
+            airlines.forEach(airline => {
+
+                const option =
+                    document.createElement("option");
+
+                option.value = airline;
+                option.textContent = airline;
+
+                select.appendChild(option);
+
+            });
+
+        }
+
+
+        function renderAirlineDirectory() {
+
+            const container =
+                document.getElementById("airlineDirectory");
+
+            const search =
+                document.getElementById("airlineSearch");
+
+            if (!container) return;
+
+            const query =
+                (search?.value || "")
+                    .trim()
+                    .toLowerCase();
+
+            const filtered =
+                airlines.filter(airline =>
+                    airline.toLowerCase().includes(query)
+                );
+
+            container.innerHTML =
+                filtered.map(airline => `
+                    <div class="airline-item">
+                        ${escapeHtml(airline)}
+                    </div>
+                `).join("");
+
+        }
+
+
+        /* =========================================================
+           DESTINATIONS
+        ========================================================= */
+
+        const destinations = [
+
+            {
+                key: "abu-dhabi",
+                city: "Abu Dhabi",
+                country: "United Arab Emirates",
+                flag: "🇦🇪",
+                icon: "🏙️",
+                description: "A modern Gulf capital known for architecture, culture and beaches."
+            },
+
+            {
+                key: "accra",
+                city: "Accra",
+                country: "Ghana",
+                flag: "🇬🇭",
+                icon: "🌴",
+                description: "A lively coastal capital with markets, beaches and cultural attractions."
+            },
+
+            {
+                key: "addis-ababa",
+                city: "Addis Ababa",
+                country: "Ethiopia",
+                flag: "🇪🇹",
+                icon: "🏔️",
+                description: "A highland capital and an important gateway to East Africa."
+            },
+
+            {
+                key: "amsterdam",
+                city: "Amsterdam",
+                country: "Netherlands",
+                flag: "🇳🇱",
+                icon: "🚲",
+                description: "Famous for canals, museums, historic streets and cycling culture."
+            },
+
+            {
+                key: "athens",
+                city: "Athens",
+                country: "Greece",
+                flag: "🇬🇷",
+                icon: "🏛️",
+                description: "A historic Mediterranean city centered around ancient landmarks."
+            },
+
+            {
+                key: "auckland",
+                city: "Auckland",
+                country: "New Zealand",
+                flag: "🇳🇿",
+                icon: "🌊",
+                description: "A beautiful harbor city surrounded by beaches and natural landscapes."
+            },
+
+            {
+                key: "bangkok",
+                city: "Bangkok",
+                country: "Thailand",
+                flag: "🇹🇭",
+                icon: "🏯",
+                description: "A vibrant destination known for temples, food, shopping and nightlife."
+            },
+
+            {
+                key: "barcelona",
+                city: "Barcelona",
+                country: "Spain",
+                flag: "🇪🇸",
+                icon: "🏖️",
+                description: "A Mediterranean city famous for architecture, beaches and cuisine."
+            },
+
+            {
+                key: "beijing",
+                city: "Beijing",
+                country: "China",
+                flag: "🇨🇳",
+                icon: "🏯",
+                description: "A historic capital featuring major cultural and imperial landmarks."
+            },
+
+            {
+                key: "cairo",
+                city: "Cairo",
+                country: "Egypt",
+                flag: "🇪🇬",
+                icon: "🏺",
+                description: "A gateway to ancient Egyptian history, museums and the Giza pyramids."
+            },
+
+            {
+                key: "cape-town",
+                city: "Cape Town",
+                country: "South Africa",
+                flag: "🇿🇦",
+                icon: "⛰️",
+                description: "A scenic city combining mountains, coastline, food and culture."
+            },
+
+            {
+                key: "chicago",
+                city: "Chicago",
+                country: "United States",
+                flag: "🇺🇸",
+                icon: "🏙️",
+                description: "A major American city known for architecture, museums and lakefront views."
+            },
+
+            {
+                key: "colombo",
+                city: "Colombo",
+                country: "Sri Lanka",
+                flag: "🇱🇰",
+                icon: "🌴",
+                description: "A coastal city offering beaches, culture, food and access to Sri Lanka."
+            },
+
+            {
+                key: "doha",
+                city: "Doha",
+                country: "Qatar",
+                flag: "🇶🇦",
+                icon: "🏙️",
+                description: "A modern Gulf destination with museums, waterfronts and contemporary architecture."
+            },
+
+            {
+                key: "dubai",
+                city: "Dubai",
+                country: "United Arab Emirates",
+                flag: "🇦🇪",
+                icon: "🌆",
+                description: "A global destination famous for skyscrapers, shopping, beaches and desert experiences."
+            },
+
+            {
+                key: "dublin",
+                city: "Dublin",
+                country: "Ireland",
+                flag: "🇮🇪",
+                icon: "🍀",
+                description: "A friendly European capital with historic neighborhoods and cultural attractions."
+            },
+
+            {
+                key: "frankfurt",
+                city: "Frankfurt",
+                country: "Germany",
+                flag: "🇩🇪",
+                icon: "🏢",
+                description: "A major European financial and aviation hub."
+            },
+
+            {
+                key: "freetown",
+                city: "Freetown",
+                country: "Sierra Leone",
+                flag: "🇸🇱",
+                icon: "🌊",
+                description: "A coastal West African capital known for beaches and surrounding hills."
+            },
+
+            {
+                key: "hong-kong",
+                city: "Hong Kong",
+                country: "Hong Kong",
+                flag: "🇭🇰",
+                icon: "🌃",
+                description: "A major international city known for its skyline, harbor and food culture."
+            },
+
+            {
+                key: "islamabad",
+                city: "Islamabad",
+                country: "Pakistan",
+                flag: "🇵🇰",
+                icon: "🌿",
+                description: "Pakistan's capital, known for greenery, modern planning and scenic hills."
+            },
+
+            {
+                key: "istanbul",
+                city: "Istanbul",
+                country: "Türkiye",
+                flag: "🇹🇷",
+                icon: "🕌",
+                description: "A historic city connecting Europe and Asia with rich architecture and culture."
+            },
+
+            {
+                key: "jakarta",
+                city: "Jakarta",
+                country: "Indonesia",
+                flag: "🇮🇩",
+                icon: "🌇",
+                description: "A large Southeast Asian capital with diverse culture and cuisine."
+            },
+
+            {
+                key: "jeddah",
+                city: "Jeddah",
+                country: "Saudi Arabia",
+                flag: "🇸🇦",
+                icon: "🌊",
+                description: "A Red Sea gateway with historic areas, waterfront attractions and modern districts."
+            },
+
+            {
+                key: "johannesburg",
+                city: "Johannesburg",
+                country: "South Africa",
+                flag: "🇿🇦",
+                icon: "🏙️",
+                description: "A major South African city and an important regional business hub."
+            },
+
+            {
+                key: "karachi",
+                city: "Karachi",
+                country: "Pakistan",
+                flag: "🇵🇰",
+                icon: "🌊",
+                description: "Pakistan's major coastal metropolis and commercial center."
+            },
+
+            {
+                key: "kuala-lumpur",
+                city: "Kuala Lumpur",
+                country: "Malaysia",
+                flag: "🇲🇾",
+                icon: "🏙️",
+                description: "A modern Asian capital famous for its skyline, food and shopping."
+            },
+
+            {
+                key: "kuwait-city",
+                city: "Kuwait City",
+                country: "Kuwait",
+                flag: "🇰🇼",
+                icon: "🏙️",
+                description: "A Gulf capital featuring modern architecture and waterfront attractions."
+            },
+
+            {
+                key: "lagos",
+                city: "Lagos",
+                country: "Nigeria",
+                flag: "🇳🇬",
+                icon: "🌆",
+                description: "A major West African city known for business, culture, beaches and entertainment."
+            },
+
+            {
+                key: "lahore",
+                city: "Lahore",
+                country: "Pakistan",
+                flag: "🇵🇰",
+                icon: "🏰",
+                description: "A cultural Pakistani city known for historic architecture and cuisine."
+            },
+
+            {
+                key: "lisbon",
+                city: "Lisbon",
+                country: "Portugal",
+                flag: "🇵🇹",
+                icon: "🚋",
+                description: "A scenic European capital known for hills, historic neighborhoods and coastal views."
+            },
+
+            {
+                key: "london",
+                city: "London",
+                country: "United Kingdom",
+                flag: "🇬🇧",
+                icon: "🎡",
+                description: "A global city famous for history, museums, shopping and iconic landmarks."
+            },
+
+            {
+                key: "los-angeles",
+                city: "Los Angeles",
+                country: "United States",
+                flag: "🇺🇸",
+                icon: "🌴",
+                description: "A major American destination known for entertainment, beaches and diverse neighborhoods."
+            },
+
+            {
+                key: "madrid",
+                city: "Madrid",
+                country: "Spain",
+                flag: "🇪🇸",
+                icon: "🏙️",
+                description: "Spain's capital with museums, historic plazas, parks and food."
+            },
+
+            {
+                key: "male",
+                city: "Malé",
+                country: "Maldives",
+                flag: "🇲🇻",
+                icon: "🏝️",
+                description: "A gateway to the Maldives' famous islands, beaches and tropical resorts."
+            },
+
+            {
+                key: "manila",
+                city: "Manila",
+                country: "Philippines",
+                flag: "🇵🇭",
+                icon: "🌴",
+                description: "A lively Southeast Asian capital with historic and coastal attractions."
+            },
+
+            {
+                key: "melbourne",
+                city: "Melbourne",
+                country: "Australia",
+                flag: "🇦🇺",
+                icon: "☕",
+                description: "An Australian city celebrated for culture, cafés, sports and arts."
+            },
+
+            {
+                key: "mexico-city",
+                city: "Mexico City",
+                country: "Mexico",
+                flag: "🇲🇽",
+                icon: "🌆",
+                description: "A huge cultural capital with museums, historic sites and excellent food."
+            },
+
+            {
+                key: "miami",
+                city: "Miami",
+                country: "United States",
+                flag: "🇺🇸",
+                icon: "🌴",
+                description: "A popular destination known for beaches, art, nightlife and warm weather."
+            },
+
+            {
+                key: "montreal",
+                city: "Montreal",
+                country: "Canada",
+                flag: "🇨🇦",
+                icon: "🏙️",
+                description: "A bilingual Canadian city known for food, festivals and historic districts."
+            },
+
+            {
+                key: "mumbai",
+                city: "Mumbai",
+                country: "India",
+                flag: "🇮🇳",
+                icon: "🌆",
+                description: "India's major financial and entertainment center on the Arabian Sea."
+            },
+
+            {
+                key: "muscat",
+                city: "Muscat",
+                country: "Oman",
+                flag: "🇴🇲",
+                icon: "🏔️",
+                description: "An Omani coastal city known for mountains, forts and Arabian culture."
+            },
+
+            {
+                key: "nairobi",
+                city: "Nairobi",
+                country: "Kenya",
+                flag: "🇰🇪",
+                icon: "🦁",
+                description: "A major East African hub and gateway to wildlife and nature experiences."
+            },
+
+            {
+                key: "new-delhi",
+                city: "New Delhi",
+                country: "India",
+                flag: "🇮🇳",
+                icon: "🏛️",
+                description: "India's capital with historic monuments, markets and cultural attractions."
+            },
+
+            {
+                key: "new-york",
+                city: "New York",
+                country: "United States",
+                flag: "🇺🇸",
+                icon: "🗽",
+                description: "A global city known for Times Square, Central Park, museums and diverse culture."
+            },
+
+            {
+                key: "paris",
+                city: "Paris",
+                country: "France",
+                flag: "🇫🇷",
+                icon: "🗼",
+                description: "A world-famous destination for art, fashion, architecture and cuisine."
+            },
+
+            {
+                key: "perth",
+                city: "Perth",
+                country: "Australia",
+                flag: "🇦🇺",
+                icon: "🌊",
+                description: "A sunny Australian city with beaches, parks and a relaxed lifestyle."
+            },
+
+            {
+                key: "phuket",
+                city: "Phuket",
+                country: "Thailand",
+                flag: "🇹🇭",
+                icon: "🏝️",
+                description: "A tropical destination known for beaches, islands and resort experiences."
+            },
+
+            {
+                key: "riyadh",
+                city: "Riyadh",
+                country: "Saudi Arabia",
+                flag: "🇸🇦",
+                icon: "🏙️",
+                description: "Saudi Arabia's capital and a major regional business destination."
+            },
+
+            {
+                key: "rio",
+                city: "Rio de Janeiro",
+                country: "Brazil",
+                flag: "🇧🇷",
+                icon: "🏖️",
+                description: "A spectacular Brazilian city famous for beaches, mountains and vibrant culture."
+            },
+
+            {
+                key: "rome",
+                city: "Rome",
+                country: "Italy",
+                flag: "🇮🇹",
+                icon: "🏛️",
+                description: "An ancient European capital filled with history, architecture and Italian cuisine."
+            },
+
+            {
+                key: "san-francisco",
+                city: "San Francisco",
+                country: "United States",
+                flag: "🇺🇸",
+                icon: "🌉",
+                description: "A famous California city known for its bay, bridges and neighborhoods."
+            },
+
+            {
+                key: "seoul",
+                city: "Seoul",
+                country: "South Korea",
+                flag: "🇰🇷",
+                icon: "🌃",
+                description: "A dynamic Asian capital combining technology, history, shopping and food."
+            },
+
+            {
+                key: "singapore",
+                city: "Singapore",
+                country: "Singapore",
+                flag: "🇸🇬",
+                icon: "🌇",
+                description: "A modern city-state known for cleanliness, food, shopping and architecture."
+            },
+
+            {
+                key: "sydney",
+                city: "Sydney",
+                country: "Australia",
+                flag: "🇦🇺",
+                icon: "🌉",
+                description: "An iconic Australian city famous for its harbor, beaches and Opera House."
+            },
+
+            {
+                key: "tokyo",
+                city: "Tokyo",
+                country: "Japan",
+                flag: "🇯🇵",
+                icon: "🌃",
+                description: "A huge Japanese metropolis combining modern technology and traditional culture."
+            },
+
+            {
+                key: "toronto",
+                city: "Toronto",
+                country: "Canada",
+                flag: "🇨🇦",
+                icon: "🏙️",
+                description: "Canada's largest city with diverse neighborhoods, culture and waterfront attractions."
+            },
+
+            {
+                key: "vancouver",
+                city: "Vancouver",
+                country: "Canada",
+                flag: "🇨🇦",
+                icon: "🏔️",
+                description: "A scenic Canadian city surrounded by mountains, ocean and parks."
+            },
+
+            {
+                key: "vienna",
+                city: "Vienna",
+                country: "Austria",
+                flag: "🇦🇹",
+                icon: "🎻",
+                description: "A European capital famous for classical music, palaces and cafés."
+            },
+
+            {
+                key: "washington",
+                city: "Washington, D.C.",
+                country: "United States",
+                flag: "🇺🇸",
+                icon: "🏛️",
+                description: "The United States capital with major monuments, museums and cultural sites."
+            },
+
+            {
+                key: "zurich",
+                city: "Zurich",
+                country: "Switzerland",
+                flag: "🇨🇭",
+                icon: "🏔️",
+                description: "A Swiss city known for its lake, old town, business district and nearby Alps."
+            }
+
+        ];
+
+
+        destinations.sort((a, b) =>
+            a.city.localeCompare(b.city)
+        );
+
+
+        function renderDestinations() {
+
+            const grid =
+                document.getElementById("destinationGrid");
+
+            const search =
+                document.getElementById("destinationSearch");
+
+            if (!grid) return;
+
+            const query =
+                (search?.value || "")
+                    .trim()
+                    .toLowerCase();
+
+            const filtered =
+                destinations.filter(item => {
+
+                    const searchable =
+                        `${item.city} ${item.country} ${item.description}`
+                            .toLowerCase();
+
+                    return searchable.includes(query);
+
+                });
+
+            grid.innerHTML =
+                filtered.map(item => `
+
+                    <article class="destination-card">
+
+                        <div class="destination-image">
+                            ${escapeHtml(item.flag)}
+                            ${escapeHtml(item.icon)}
+                        </div>
+
+                        <div class="destination-content">
+
+                            <h3>
+                                ${escapeHtml(item.city)}
+                            </h3>
+
+                            <p>
+                                ${escapeHtml(item.country)}
+                            </p>
+
+                            <p>
+                                ${escapeHtml(item.description)}
+                            </p>
+
+                            <div class="destination-price">
+                                Worldwide Travel
+                            </div>
+
+                            <button
+                                type="button"
+                                class="details-btn"
+                                onclick="showDestination('${escapeHtml(item.key)}')"
+                            >
+                                View Details
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                `).join("");
+
+
+            if (!filtered.length) {
+
+                grid.innerHTML = `
+                    <div class="empty-results">
+                        No destination found for
+                        <strong>${escapeHtml(query)}</strong>.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        function showAllDestinations() {
+
+            const search =
+                document.getElementById("destinationSearch");
+
+            if (search) {
+                search.value = "";
+            }
+
+            renderDestinations();
+
+            document
+                .getElementById("destinations")
+                ?.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+        }
+
+
+        function showDestination(key) {
+
+            const destination =
+                destinations.find(item =>
+                    item.key === key
+                );
+
+            if (!destination) return;
+
+            const modal =
+                document.getElementById("destinationModal");
+
+            const content =
+                document.getElementById("destinationText");
+
+            content.innerHTML = `
+
+                <h2>
+                    ${escapeHtml(destination.flag)}
+                    ${escapeHtml(destination.city)}
+                </h2>
+
+                <p>
+                    <strong>Country:</strong>
+                    ${escapeHtml(destination.country)}
+                </p>
+
+                <h3>About ${escapeHtml(destination.city)}</h3>
+
+                <p>
+                    ${escapeHtml(destination.description)}
+                </p>
+
+                <h3>Travel Planning</h3>
+
+                <p>
+                    Use the flight search engine above to enter
+                    your departure city, travel dates, passengers,
+                    cabin class and preferred airline.
+                </p>
+
+                <h3>Popular Travel Interests</h3>
+
+                <p>
+                    Explore local attractions, food, culture,
+                    shopping, landmarks and nearby experiences.
+                </p>
+
+            `;
+
+            modal.classList.add("active");
+
+            document.body.style.overflow = "hidden";
+
+        }
+
+
+        function closeDestination() {
+
+            const modal =
+                document.getElementById("destinationModal");
+
+            modal?.classList.remove("active");
+
+            document.body.style.overflow = "";
+
+        }
+
+
+        function closeDestinationOnBackdrop(event) {
+
+            if (
+                event.target.id === "destinationModal"
+            ) {
+                closeDestination();
+            }
+
+        }
+
+
+        /* =========================================================
+           AIRPORTS
+        ========================================================= */
+
+        const airports = [
+
+            {
+                code: "ISB",
+                city: "Islamabad",
+                country: "Pakistan",
+                name: "Islamabad International Airport"
+            },
+
+            {
+                code: "KHI",
+                city: "Karachi",
+                country: "Pakistan",
+                name: "Jinnah International Airport"
+            },
+
+            {
+                code: "LHE",
+                city: "Lahore",
+                country: "Pakistan",
+                name: "Allama Iqbal International Airport"
+            },
+
+            {
+                code: "PEW",
+                city: "Peshawar",
+                country: "Pakistan",
+                name: "Bacha Khan International Airport"
+            },
+
+            {
+                code: "MUX",
+                city: "Multan",
+                country: "Pakistan",
+                name: "Multan International Airport"
+            },
+
+            {
+                code: "SKT",
+                city: "Sialkot",
+                country: "Pakistan",
+                name: "Sialkot International Airport"
+            },
+
+            {
+                code: "UET",
+                city: "Quetta",
+                country: "Pakistan",
+                name: "Quetta International Airport"
+            },
+
+            {
+                code: "DXB",
+                city: "Dubai",
+                country: "United Arab Emirates",
+                name: "Dubai International Airport"
+            },
+
+            {
+                code: "AUH",
+                city: "Abu Dhabi",
+                country: "United Arab Emirates",
+                name: "Zayed International Airport"
+            },
+
+            {
+                code: "SHJ",
+                city: "Sharjah",
+                country: "United Arab Emirates",
+                name: "Sharjah International Airport"
+            },
+
+            {
+                code: "DOH",
+                city: "Doha",
+                country: "Qatar",
+                name: "Hamad International Airport"
+            },
+
+            {
+                code: "JED",
+                city: "Jeddah",
+                country: "Saudi Arabia",
+                name: "King Abdulaziz International Airport"
+            },
+
+            {
+                code: "RUH",
+                city: "Riyadh",
+                country: "Saudi Arabia",
+                name: "King Khalid International Airport"
+            },
+
+            {
+                code: "MED",
+                city: "Medina",
+                country: "Saudi Arabia",
+                name: "Prince Mohammad bin Abdulaziz International Airport"
+            },
+
+            {
+                code: "LHR",
+                city: "London",
+                country: "United Kingdom",
+                name: "Heathrow Airport"
+            },
+
+            {
+                code: "LGW",
+                city: "London",
+                country: "United Kingdom",
+                name: "Gatwick Airport"
+            },
+
+            {
+                code: "STN",
+                city: "London",
+                country: "United Kingdom",
+                name: "Stansted Airport"
+            },
+
+            {
+                code: "MAN",
+                city: "Manchester",
+                country: "United Kingdom",
+                name: "Manchester Airport"
+            },
+
+            {
+                code: "BHX",
+                city: "Birmingham",
+                country: "United Kingdom",
+                name: "Birmingham Airport"
+            },
+
+            {
+                code: "GLA",
+                city: "Glasgow",
+                country: "United Kingdom",
+                name: "Glasgow Airport"
+            },
+
+            {
+                code: "CDG",
+                city: "Paris",
+                country: "France",
+                name: "Charles de Gaulle Airport"
+            },
+
+            {
+                code: "FRA",
+                city: "Frankfurt",
+                country: "Germany",
+                name: "Frankfurt Airport"
+            },
+
+            {
+                code: "IST",
+                city: "Istanbul",
+                country: "Türkiye",
+                name: "Istanbul Airport"
+            },
+
+            {
+                code: "JFK",
+                city: "New York",
+                country: "United States",
+                name: "John F. Kennedy International Airport"
+            },
+
+            {
+                code: "EWR",
+                city: "Newark",
+                country: "United States",
+                name: "Newark Liberty International Airport"
+            },
+
+            {
+                code: "LAX",
+                city: "Los Angeles",
+                country: "United States",
+                name: "Los Angeles International Airport"
+            },
+
+            {
+                code: "YYZ",
+                city: "Toronto",
+                country: "Canada",
+                name: "Toronto Pearson International Airport"
+            },
+
+            {
+                code: "YVR",
+                city: "Vancouver",
+                country: "Canada",
+                name: "Vancouver International Airport"
+            },
+
+            {
+                code: "BOM",
+                city: "Mumbai",
+                country: "India",
+                name: "Chhatrapati Shivaji Maharaj International Airport"
+            },
+
+            {
+                code: "DEL",
+                city: "New Delhi",
+                country: "India",
+                name: "Indira Gandhi International Airport"
+            },
+
+            {
+                code: "KUL",
+                city: "Kuala Lumpur",
+                country: "Malaysia",
+                name: "Kuala Lumpur International Airport"
+            },
+
+            {
+                code: "SIN",
+                city: "Singapore",
+                country: "Singapore",
+                name: "Singapore Changi Airport"
+            },
+
+            {
+                code: "BKK",
+                city: "Bangkok",
+                country: "Thailand",
+                name: "Suvarnabhumi Airport"
+            },
+
+            {
+                code: "NRT",
+                city: "Tokyo",
+                country: "Japan",
+                name: "Narita International Airport"
+            },
+
+            {
+                code: "SYD",
+                city: "Sydney",
+                country: "Australia",
+                name: "Sydney Kingsford Smith Airport"
+            }
+
+        ];
+
+
+        function setupAirportAutocomplete() {
+
+            setupOneAirportAutocomplete(
+                "from",
+                "fromSuggestions"
+            );
+
+            setupOneAirportAutocomplete(
+                "to",
+                "toSuggestions"
+            );
+
+        }
+
+
+        function setupOneAirportAutocomplete(
+            inputId,
+            suggestionId
+        ) {
+
+            const input =
+                document.getElementById(inputId);
+
+            const box =
+                document.getElementById(suggestionId);
+
+            if (!input || !box) return;
+
+            input.addEventListener(
+                "input",
+                () => {
+
+                    const query =
+                        input.value
+                            .trim()
+                            .toLowerCase();
+
+                    if (!query) {
+
+                        box.innerHTML = "";
+                        box.classList.remove("active");
+                        return;
+
+                    }
+
+                    const matches =
+                        airports
+                            .filter(airport => {
+
+                                const searchable =
+                                    `${airport.code}
+                                     ${airport.city}
+                                     ${airport.country}
+                                     ${airport.name}`
+                                        .toLowerCase();
+
+                                return searchable.includes(query);
+
+                            })
+                            .slice(0, 8);
+
+
+                    box.innerHTML =
+                        matches.map(airport => `
+
+                            <button
+                                type="button"
+                                class="airport-option"
+                                data-code="${escapeHtml(airport.code)}"
+                                data-city="${escapeHtml(airport.city)}"
+                            >
+
+                                <span class="airport-main">
+
+                                    <strong>
+                                        ${escapeHtml(airport.city)}
+                                    </strong>
+
+                                    <small>
+                                        ${escapeHtml(airport.name)}
+                                        ·
+                                        ${escapeHtml(airport.country)}
+                                    </small>
+
+                                </span>
+
+                                <span class="airport-code">
+                                    ${escapeHtml(airport.code)}
+                                </span>
+
+                            </button>
+
+                        `).join("");
+
+
+                    if (matches.length) {
+                        box.classList.add("active");
+                    } else {
+                        box.classList.remove("active");
+                    }
+
+
+                    box.querySelectorAll(".airport-option")
+                        .forEach(button => {
+
+                            button.addEventListener(
+                                "click",
+                                () => {
+
+                                    input.value =
+                                        `${button.dataset.city}
+                                         (${button.dataset.code})`;
+
+                                    box.classList.remove("active");
+
+                                }
+                            );
+
+                        });
+
+                }
+            );
+
+
+            input.addEventListener(
+                "focus",
+                () => {
+
+                    if (input.value.trim()) {
+                        input.dispatchEvent(
+                            new Event("input")
+                        );
+                    }
+
+                }
+            );
+
+        }
+
+
+        document.addEventListener(
+            "click",
+            event => {
+
+                if (!event.target.closest(".field")) {
+
+                    document
+                        .querySelectorAll(".airport-suggestions")
+                        .forEach(box =>
+                            box.classList.remove("active")
+                        );
+
+                }
+
+            }
+        );
+
+
+        function swapAirports() {
+
+            const from =
+                document.getElementById("from");
+
+            const to =
+                document.getElementById("to");
+
+            if (!from || !to) return;
+
+            const value =
+                from.value;
+
+            from.value =
+                to.value;
+
+            to.value =
+                value;
+
+            showToast("Departure and destination swapped.");
+
+        }
+
+
+        /* =========================================================
+           DATES / TRIP TYPE
+        ========================================================= */
+
+        function setupDates() {
+
+            const departure =
+                document.getElementById("departure");
+
+            const returnDate =
+                document.getElementById("returnDate");
+
+            if (!departure || !returnDate) return;
+
+            const today =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+            departure.min = today;
+            returnDate.min = today;
+
+
+            departure.addEventListener(
+                "change",
+                () => {
+
+                    returnDate.min =
+                        departure.value || today;
+
+                    if (
+                        returnDate.value &&
+                        departure.value &&
+                        returnDate.value < departure.value
+                    ) {
+
+                        returnDate.value =
+                            departure.value;
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        function setupTripTypes() {
+
+            document
+                .querySelectorAll('input[name="trip"]')
+                .forEach(radio => {
+
+                    radio.addEventListener(
+                        "change",
+                        updateTripUI
+                    );
+
+                });
+
+            updateTripUI();
+
+        }
+
+
+        function updateTripUI() {
+
+            const type =
+                document.querySelector(
+                    'input[name="trip"]:checked'
+                )?.value;
+
+            const returnDate =
+                document.getElementById("returnDate");
+
+            if (!returnDate) return;
+
+            if (type === "one_way") {
+
+                returnDate.disabled = true;
+                returnDate.value = "";
+
+            } else {
+
+                returnDate.disabled = false;
+
+            }
+
+            if (type === "multi_city") {
+
+                showToast(
+                    "Multi-City mode selected. Your backend must support multi-leg flight searches."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           FLIGHT SEARCH
+        ========================================================= */
+
+        async function searchFlights() {
+
+            const from =
+                document.getElementById("from")
+                    ?.value.trim();
+
+            const to =
+                document.getElementById("to")
+                    ?.value.trim();
+
+            const departure =
+                document.getElementById("departure")
+                    ?.value;
+
+            const returnDate =
+                document.getElementById("returnDate")
+                    ?.value;
+
+            const tripType =
+                document.querySelector(
+                    'input[name="trip"]:checked'
+                )?.value || "round_trip";
+
+            const adults =
+                Number(
+                    document.getElementById("Adults")
+                        ?.value || 1
+                );
+
+            const youths =
+                Number(
+                    document.getElementById("Youths")
+                        ?.value || 0
+                );
+
+            const children =
+                Number(
+                    document.getElementById("Childrens")
+                        ?.value || 0
+                );
+
+            const infants =
+                Number(
+                    document.getElementById("Infants")
+                        ?.value || 0
+                );
+
+            const cabin =
+                document.getElementById("cabinClass")
+                    ?.value || "Economy";
+
+            const airline =
+                document.getElementById("airline")
+                    ?.value || "";
+
+
+            if (!from || !to || !departure) {
+
+                showToast(
+                    "Please enter From, To and Departure Date."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                tripType === "round_trip" &&
+                !returnDate
+            ) {
+
+                showToast(
+                    "Please select a return date."
+                );
+
+                return;
+
+            }
+
+
+            if (from.toLowerCase() === to.toLowerCase()) {
+
+                showToast(
+                    "Departure and destination cannot be the same."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                tripType === "round_trip" &&
+                returnDate < departure
+            ) {
+
+                showToast(
+                    "Return date cannot be before departure date."
+                );
+
+                return;
+
+            }
+
+
+            const searchButton =
+                document.getElementById("searchButton");
+
+            searchButton?.classList.add("loading");
+
+            if (searchButton) {
+                searchButton.textContent =
+                    "⏳ Searching Flights...";
+            }
+
+
+            const payload = {
+
+                tripType,
+
+                origin: from,
+                destination: to,
+
+                departureDate: departure,
+                returnDate:
+                    tripType === "one_way"
+                        ? null
+                        : returnDate,
+
+                passengers: {
+                    adults,
+                    youths,
+                    children,
+                    infants
+                },
+
+                cabinClass: cabin,
+                airline
+
+            };
+
+
+            try {
+
+                /*
+                 * OPTIONAL REAL BACKEND
+                 *
+                 * Connect this endpoint to your authorized
+                 * flight provider.
+                 */
+
+                const response =
+                    await fetch(
+                        "/api/flights/search",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+                            body:
+                                JSON.stringify(payload)
+                        }
+                    );
+
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Flight API unavailable"
+                    );
+                }
+
+
+                const data =
+                    await response.json();
+
+                renderFlightResults(
+                    data.flights ||
+                    data.results ||
+                    []
+                );
+
+            } catch (error) {
+
+                /*
+                 * IMPORTANT:
+                 * This does NOT pretend that real flights
+                 * were found. It clearly tells the visitor
+                 * that the API is not connected.
+                 */
+
+                showBackendConnectionMessage();
+
+            } finally {
+
+                searchButton?.classList.remove(
+                    "loading"
+                );
+
+                if (searchButton) {
+                    searchButton.textContent =
+                        "🔎 Search Flights";
+                }
+
+            }
+
+        }
+
+
+        function showBackendConnectionMessage() {
+
+            const section =
+                document.getElementById(
+                    "flightResultsSection"
+                );
+
+            const list =
+                document.getElementById(
+                    "resultsList"
+                );
+
+            const summary =
+                document.getElementById(
+                    "resultsSummary"
+                );
+
+            section.classList.add("active");
+
+            summary.textContent =
+                "Flight search request prepared.";
+
+            list.innerHTML = `
+
+                <div class="empty-results">
+
+                    <h3>
+                        Live Flight API Not Connected
+                    </h3>
+
+                    <p style="margin-top:10px;">
+
+                        Your search form is working, but
+                        <strong>/api/flights/search</strong>
+                        is not connected to a live flight provider.
+
+                    </p>
+
+                    <p style="margin-top:10px;">
+
+                        Connect this endpoint to an authorized
+                        flight API/backend to display real-time
+                        flight inventory, fares and availability.
+
+                    </p>
+
+                </div>
+
+            `;
+
+            section.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /* =========================================================
+           FLIGHT RESULTS
+        ========================================================= */
+
+        let currentFlights = [];
+
+
+        function renderFlightResults(
+            flights
+        ) {
+
+            currentFlights =
+                Array.isArray(flights)
+                    ? flights
+                    : [];
+
+            const section =
+                document.getElementById(
+                    "flightResultsSection"
+                );
+
+            const list =
+                document.getElementById(
+                    "resultsList"
+                );
+
+            const summary =
+                document.getElementById(
+                    "resultsSummary"
+                );
+
+
+            section.classList.add("active");
+
+
+            if (!currentFlights.length) {
+
+                summary.textContent =
+                    "No flights were returned.";
+
+                list.innerHTML = `
+                    <div class="empty-results">
+                        <h3>No Flights Found</h3>
+                        <p>
+                            Try different dates, airports or
+                            search preferences.
+                        </p>
+                    </div>
+                `;
+
+                section.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+                return;
+
+            }
+
+
+            summary.textContent =
+                `${currentFlights.length} flight option(s) found.`;
+
+
+            applyFlightFilters();
+
+            section.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+
+        function parseDuration(value) {
+
+            if (typeof value === "number") {
+                return value;
+            }
+
+            const text =
+                String(value || "")
+                    .toLowerCase();
+
+            const hourMatch =
+                text.match(/(\d+)\s*h/);
+
+            const minuteMatch =
+                text.match(/(\d+)\s*m/);
+
+            const hours =
+                hourMatch
+                    ? Number(hourMatch[1])
+                    : 0;
+
+            const minutes =
+                minuteMatch
+                    ? Number(minuteMatch[1])
+                    : 0;
+
+            return hours * 60 + minutes;
+
+        }
+
+
+        function applyFlightFilters() {
+
+            const sort =
+                document.getElementById(
+                    "sortFlights"
+                )?.value || "price";
+
+            const maxConnections =
+                document.getElementById(
+                    "maxConnections"
+                )?.value;
+
+
+            let flights =
+                [...currentFlights];
+
+
+            if (maxConnections !== "") {
+
+                flights =
+                    flights.filter(flight => {
+
+                        const stops =
+                            Number(
+                                flight.stops ??
+                                flight.numberOfStops ??
+                                0
+                            );
+
+                        return stops <=
+                            Number(maxConnections);
+
+                    });
+
+            }
+
+
+            flights.sort((a, b) => {
+
+                if (sort === "duration") {
+
+                    return (
+                        parseDuration(
+                            a.duration
+                        ) -
+                        parseDuration(
+                            b.duration
+                        )
+                    );
+
+                }
+
+                if (sort === "departure") {
+
+                    return String(
+                        a.departureTime ||
+                        a.departure ||
+                        ""
+                    ).localeCompare(
+                        String(
+                            b.departureTime ||
+                            b.departure ||
+                            ""
+                        )
+                    );
+
+                }
+
+                return (
+                    Number(
+                        a.price ??
+                        a.totalPrice ??
+                        Infinity
+                    ) -
+                    Number(
+                        b.price ??
+                        b.totalPrice ??
+                        Infinity
+                    )
+                );
+
+            });
+
+
+            const list =
+                document.getElementById(
+                    "resultsList"
+                );
+
+
+            if (!flights.length) {
+
+                list.innerHTML = `
+                    <div class="empty-results">
+                        No flights match the selected filter.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            list.innerHTML =
+                flights.map(
+                    (flight, index) =>
+                        flightCard(
+                            flight,
+                            index
+                        )
+                ).join("");
+
+        }
+
+
+        function flightCard(
+            flight,
+            index
+        ) {
+
+            const airline =
+                flight.airline ||
+                flight.airlineName ||
+                "Airline";
+
+            const flightNumber =
+                flight.flightNumber ||
+                flight.number ||
+                "Flight";
+
+            const from =
+                flight.origin ||
+                flight.from ||
+                "---";
+
+            const to =
+                flight.destination ||
+                flight.to ||
+                "---";
+
+            const departure =
+                flight.departureTime ||
+                flight.departure ||
+                "--:--";
+
+            const arrival =
+                flight.arrivalTime ||
+                flight.arrival ||
+                "--:--";
+
+            const duration =
+                flight.duration ||
+                "--";
+
+            const stops =
+                flight.stops ??
+                flight.numberOfStops ??
+                0;
+
+            const price =
+                flight.price ??
+                flight.totalPrice ??
+                "—";
+
+            const currency =
+                flight.currency ||
+                "USD";
+
+            const baggage =
+                flight.baggage ||
+                "Baggage details provided by airline";
+
+
+            return `
+
+                <article class="flight-card">
+
+                    <div class="flight-top">
+
+                        <div>
+
+                            <div class="airline-name">
+                                ${escapeHtml(airline)}
+                            </div>
+
+                            <div class="flight-number">
+                                ${escapeHtml(flightNumber)}
+                            </div>
+
+                        </div>
+
+                        <div class="flight-price">
+
+                            <strong>
+                                ${escapeHtml(currency)}
+                                ${escapeHtml(price)}
+                            </strong>
+
+                            <small>
+                                per selected fare
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="flight-route">
+
+                        <div class="flight-point">
+
+                            <strong>
+                                ${escapeHtml(departure)}
+                            </strong>
+
+                            <small>
+                                ${escapeHtml(from)}
+                            </small>
+
+                        </div>
+
+
+                        <div class="route-line">
+
+                            ✈️
+
+                            <br>
+
+                            ${escapeHtml(duration)}
+
+                            <br>
+
+                            ${escapeHtml(stops)} stop(s)
+
+                        </div>
+
+
+                        <div class="flight-point">
+
+                            <strong>
+                                ${escapeHtml(arrival)}
+                            </strong>
+
+                            <small>
+                                ${escapeHtml(to)}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="flight-meta">
+
+                        <span>
+                            🧳 ${escapeHtml(baggage)}
+                        </span>
+
+                        <span>
+                            ✈️ ${escapeHtml(airline)}
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="select-flight-btn"
+                        onclick="selectFlight(${index})"
+                    >
+                        Select Flight
+                    </button>
+
+                </article>
+
+            `;
+
+        }
+
+
+        document
+            .getElementById("sortFlights")
+            ?.addEventListener(
+                "change",
+                applyFlightFilters
+            );
+
+
+        document
+            .getElementById("maxConnections")
+            ?.addEventListener(
+                "change",
+                applyFlightFilters
+            );
+
+
+        /* =========================================================
+           SELECT FLIGHT
+        ========================================================= */
+
+        let selectedFlight = null;
+
+
+        async function selectFlight(index) {
+
+            selectedFlight =
+                currentFlights[index];
+
+
+            if (!selectedFlight) return;
+
+
+            /*
+             * Optional offer endpoint.
+             * If it is not connected, we still show the
+             * passenger form without claiming a confirmed ticket.
+             */
+
+            if (selectedFlight.id) {
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/api/flights/offer/${encodeURIComponent(
+                                selectedFlight.id
+                            )}`
+                        );
+
+
+                    if (response.ok) {
+
+                        const offer =
+                            await response.json();
+
+                        selectedFlight =
+                            offer.flight ||
+                            offer.offer ||
+                            selectedFlight;
+
+                    }
+
+                } catch (error) {
+
+                    console.log(
+                        "Offer endpoint not connected."
+                    );
+
+                }
+
+            }
+
+
+            buildPassengerForm();
+
+            document
+                .getElementById("passengerModal")
+                .classList.add("active");
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+        /* =========================================================
+           PASSENGER FORM
+        ========================================================= */
+
+        function getPassengerCounts() {
+
+            return {
+
+                adults: Number(
+                    document.getElementById("Adults")
+                        ?.value || 1
+                ),
+
+                youths: Number(
+                    document.getElementById("Youths")
+                        ?.value || 0
+                ),
+
+                children: Number(
+                    document.getElementById("Childrens")
+                        ?.value || 0
+                ),
+
+                infants: Number(
+                    document.getElementById("Infants")
+                        ?.value || 0
+                )
+
+            };
+
+        }
+
+
+        function buildPassengerForm() {
+
+            const counts =
+                getPassengerCounts();
+
+            const container =
+                document.getElementById(
+                    "passengerFields"
+                );
+
+            const ageContainer =
+                document.getElementById(
+                    "passengerAges"
+                );
+
+
+            if (!container) return;
+
+
+            container.innerHTML = "";
+
+
+            let number = 1;
+
+
+            const addPassenger =
+                (
+                    type,
+                    count
+                ) => {
+
+                    for (
+                        let i = 1;
+                        i <= count;
+                        i++
+                    ) {
+
+                        const block =
+                            document.createElement(
+                                "div"
+                            );
+
+                        block.className =
+                            "passenger-block";
+
+
+                        block.innerHTML = `
+
+                            <h4>
+                                Passenger ${number}
+                                - ${escapeHtml(type)}
+                            </h4>
+
+                            <div class="passenger-grid">
+
+                                <input
+                                    type="text"
+                                    name="firstName"
+                                    placeholder="First Name"
+                                    required
+                                >
+
+                                <input
+                                    type="text"
+                                    name="lastName"
+                                    placeholder="Last Name"
+                                    required
+                                >
+
+                                <select
+                                    name="title"
+                                    required
+                                >
+                                    <option value="">
+                                        Title
+                                    </option>
+                                    <option value="Mr">
+                                        Mr
+                                    </option>
+                                    <option value="Ms">
+                                        Ms
+                                    </option>
+                                    <option value="Mrs">
+                                        Mrs
+                                    </option>
+                                    <option value="Miss">
+                                        Miss
+                                    </option>
+                                </select>
+
+                                <input
+                                    type="date"
+                                    name="dateOfBirth"
+                                    aria-label="Date of Birth"
+                                    required
+                                >
+
+                                <input
+                                    type="text"
+                                    name="passport"
+                                    placeholder="Passport / ID Number"
+                                    required
+                                >
+
+                                <input
+                                    type="text"
+                                    name="nationality"
+                                    placeholder="Nationality"
+                                    required
+                                >
+
+                            </div>
+
+                        `;
+
+
+                        container.appendChild(
+                            block
+                        );
+
+
+                        number++;
+
+                    }
+
+                };
+
+
+            addPassenger(
+                "Adult",
+                counts.adults
+            );
+
+            addPassenger(
+                "Youth",
+                counts.youths
+            );
+
+            addPassenger(
+                "Child",
+                counts.children
+            );
+
+            addPassenger(
+                "Infant",
+                counts.infants
+            );
+
+
+            updatePassengerAgeFields(
+                counts
+            );
+
+        }
+
+
+        function updatePassengerAgeFields(
+            counts = getPassengerCounts()
+        ) {
+
+            const box =
+                document.getElementById(
+                    "passengerAges"
+                );
+
+            if (!box) return;
+
+            box.innerHTML = "";
+
+
+            let number = 1;
+
+
+            const addAgeFields =
+                (
+                    type,
+                    count,
+                    min,
+                    max
+                ) => {
+
+                    for (
+                        let i = 1;
+                        i <= count;
+                        i++
+                    ) {
+
+                        const wrapper =
+                            document.createElement(
+                                "div"
+                            );
+
+                        wrapper.innerHTML = `
+
+                            <label>
+                                ${escapeHtml(type)}
+                                ${i} Age
+                            </label>
+
+                            <select
+                                name="passengerAge"
+                                required
+                            >
+                                <option value="">
+                                    Select age
+                                </option>
+
+                                ${Array
+                                    .from(
+                                        {
+                                            length:
+                                                max - min + 1
+                                        },
+                                        (_, index) =>
+                                            min + index
+                                    )
+                                    .map(age =>
+                                        `<option value="${age}">
+                                            ${age} years
+                                        </option>`
+                                    )
+                                    .join("")
+                                }
+
+                            </select>
+
+                        `;
+
+                        box.appendChild(
+                            wrapper
+                        );
+
+                        number++;
+
+                    }
+
+                };
+
+
+            addAgeFields(
+                "Child",
+                counts.children,
+                2,
+                11
+            );
+
+            addAgeFields(
+                "Infant",
+                counts.infants,
+                0,
+                1
+            );
+
+        }
+
+
+        function closePassengerModal() {
+
+            document
+                .getElementById(
+                    "passengerModal"
+                )
+                ?.classList.remove("active");
+
+            document.body.style.overflow = "";
+
+        }
+
+
+        /* =========================================================
+           BOOKING HOLD
+        ========================================================= */
+
+        async function submitBookingHold(event) {
+
+            event.preventDefault();
+
+
+            if (!selectedFlight) {
+
+                showToast(
+                    "Please select a flight first."
+                );
+
+                return;
+
+            }
+
+
+            const form =
+                document.getElementById(
+                    "passengerForm"
+                );
+
+            const formData =
+                new FormData(form);
+
+
+            const passengerFields =
+                {};
+
+
+            formData.forEach(
+                (value, key) => {
+
+                    if (!passengerFields[key]) {
+                        passengerFields[key] = [];
+                    }
+
+                    passengerFields[key].push(
+                        value
+                    );
+
+                }
+            );
+
+
+            const payload = {
+
+                flight:
+                    selectedFlight,
+
+                passengers:
+                    passengerFields
+
+            };
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/bookings/hold",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+                            body:
+                                JSON.stringify(payload)
+                        }
+                    );
+
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Booking endpoint unavailable"
+                    );
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                showBookingConfirmation(
+                    data.reference ||
+                    data.bookingReference ||
+                    "PENDING"
+                );
+
+
+            } catch (error) {
+
+                showBookingConfirmation(
+                    "DEMO-PENDING"
+                );
+
+            }
+
+        }
+
+
+        function showBookingConfirmation(
+            reference
+        ) {
+
+            const box =
+                document.getElementById(
+                    "bookingConfirmation"
+                );
+
+
+            box.style.display =
+                "block";
+
+
+            box.innerHTML = `
+
+                <strong>
+                    Booking request prepared
+                </strong>
+
+                <p style="margin-top:7px;">
+
+                    Reference:
+                    <strong>
+                        ${escapeHtml(reference)}
+                    </strong>
+
+                </p>
+
+                <p style="margin-top:7px;">
+
+                    This front-end demo does not confirm
+                    ticket issuance or payment. Connect
+                    <strong>/api/bookings/hold</strong>
+                    to your secure backend before accepting
+                    real bookings.
+
+                </p>
+
+            `;
+
+        }
+
+
+        /* =========================================================
+           PAYMENT
+        ========================================================= */
+
+        function copyIBAN() {
+
+            const value =
+                document.getElementById(
+                    "iban"
+                )?.textContent.trim();
+
+            if (!value) return;
+
+
+            if (
+                navigator.clipboard &&
+                navigator.clipboard.writeText
+            ) {
+
+                navigator.clipboard
+                    .writeText(value)
+                    .then(() => {
+
+                        showToast(
+                            "IBAN copied to clipboard."
+                        );
+
+                    })
+                    .catch(() => {
+
+                        showToast(
+                            "Please copy the IBAN manually."
+                        );
+
+                    });
+
+            } else {
+
+                showToast(
+                    "Please copy the IBAN manually."
+                );
+
+            }
+
+        }
+
+
+        function startSecurePayment() {
+
+            showToast(
+                "A real card gateway must be connected before accepting card payments."
+            );
+
+        }
+
+
+        function submitPaymentDetails(event) {
+
+            event.preventDefault();
+
+
+            const reference =
+                document.getElementById(
+                    "paymentBookingReference"
+                )?.value.trim();
+
+
+            if (!reference) {
+
+                showToast(
+                    "Please enter your booking reference."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Do not claim that money was received here.
+             * This is only a front-end confirmation form.
+             */
+
+            showToast(
+                "Payment information captured on this demo page. Connect a secure backend before going live."
+            );
+
+
+            event.target.reset();
+
+        }
+
+
+        /* =========================================================
+           CONTACT FORM
+        ========================================================= */
+
+        function sendMessage(event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document.getElementById(
+                    "contactName"
+                )?.value.trim();
+
+
+            showToast(
+                `Thank you${name ? " " + name : ""}. Your message form is ready for backend/email connection.`
+            );
+
+
+            event.target.reset();
+
+        }
+
+
+        /* =========================================================
+           FAQ
+        ========================================================= */
+
+        function toggleFAQ(button) {
+
+            const item =
+                button.closest(".faq-item");
+
+            if (!item) return;
+
+
+            const isActive =
+                item.classList.contains(
+                    "active"
+                );
+
+
+            document
+                .querySelectorAll(".faq-item")
+                .forEach(other => {
+
+                    other.classList.remove(
+                        "active"
+                    );
+
+                    const icon =
+                        other.querySelector(
+                            ".faq-question span"
+                        );
+
+                    if (icon) {
+                        icon.textContent = "+";
+                    }
+
+                });
+
+
+            if (!isActive) {
+
+                item.classList.add(
+                    "active"
+                );
+
+                const icon =
+                    button.querySelector(
+                        "span"
+                    );
+
+                if (icon) {
+                    icon.textContent = "−";
+                }
+
+            }
+
+        }
+
+
+        /* =========================================================
+           ESC KEY FOR MODALS
+        ========================================================= */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (event.key === "Escape") {
+
+                    closeDestination();
+                    closePassengerModal();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           INITIALIZE WEBSITE
+        ========================================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                loadAirlines();
+
+                renderAirlineDirectory();
+
+                renderDestinations();
+
+                setupAirportAutocomplete();
+
+                setupDates();
+
+                setupTripTypes();
+
+
+                const year =
+                    document.getElementById(
+                        "currentYear"
+                    );
+
+                if (year) {
+                    year.textContent =
+                        new Date().getFullYear();
+                }
+
+            }
+        );
+
+    </script>
 
 </body>
 </html>
