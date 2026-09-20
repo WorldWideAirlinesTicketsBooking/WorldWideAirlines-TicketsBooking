@@ -1,69 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Wide Airlines Tickets Booking</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Wide Airlines Tickets Booking</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <h1>World Wide Airlines Tickets Booking</h1>
-            <p>Your Trusted Partner for Worldwide Air Travel</p>
-            <a href="#contact" class="btn">Book Now</a>
+<nav>
+    <div class="logo">✈ World Wide Airlines</div>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#destinations">Destinations</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<header id="home">
+    <div class="hero">
+        <h1>Book Flights Worldwide</h1>
+        <p>Your Trusted Partner for Domestic & International Travel</p>
+        <a href="#contact" class="btn">Book Your Flight</a>
+    </div>
+</header>
+
+<section class="why-us">
+    <h2>Why Choose Us?</h2>
+    <div class="features">
+        <div class="feature">✓ Best Airfares</div>
+        <div class="feature">✓ Fast Booking Support</div>
+        <div class="feature">✓ Worldwide Destinations</div>
+        <div class="feature">✓ Customer Satisfaction</div>
+    </div>
+</section>
+
+<section id="services">
+    <h2>Our Services</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>Flight Reservations</h3>
+            <p>Book domestic and international flights.</p>
         </div>
-    </header>
 
-    <section id="about">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>
-                We help travelers find affordable domestic and international flights
-                with reliable booking assistance and professional customer support.
-            </p>
+        <div class="card">
+            <h3>Group Travel</h3>
+            <p>Family, business and corporate bookings.</p>
         </div>
-    </section>
 
-    <section id="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <div class="cards">
-                <div class="card">
-                    <h3>Flight Reservations</h3>
-                    <p>Domestic & International ticket booking.</p>
-                </div>
-                <div class="card">
-                    <h3>Group Travel</h3>
-                    <p>Family and corporate travel bookings.</p>
-                </div>
-                <div class="card">
-                    <h3>Travel Support</h3>
-                    <p>Guidance for flights and travel planning.</p>
-                </div>
-            </div>
+        <div class="card">
+            <h3>Travel Assistance</h3>
+            <p>Professional support throughout your journey.</p>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <form id="bookingForm">
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="text" placeholder="Departure City" required>
-                <input type="text" placeholder="Destination" required>
-                <button type="submit">Submit Inquiry</button>
-            </form>
-            <p id="message"></p>
-        </div>
-    </section>
+<section id="destinations">
+    <h2>Popular Destinations</h2>
+    <div class="cards">
+        <div class="card">Dubai 🇦🇪</div>
+        <div class="card">Istanbul 🇹🇷</div>
+        <div class="card">London 🇬🇧</div>
+        <div class="card">Toronto 🇨🇦</div>
+        <div class="card">Jeddah 🇸🇦</div>
+        <div class="card">Bangkok 🇹🇭</div>
+    </div>
+</section>
 
-    <footer>
-        <p>&copy; 2026 World Wide Airlines Tickets Booking. All Rights Reserved.</p>
-    </footer>
+<section id="contact">
+    <h2>Contact Us</h2>
 
-    <script src="script.js"></script>
+    <form id="bookingForm">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="text" placeholder="Departure City" required>
+        <input type="text" placeholder="Destination" required>
+        <button type="submit">Submit Inquiry</button>
+    </form>
+
+    <p id="message"></p>
+</section>
+
+<footer>
+    <p>© 2026 World Wide Airlines Tickets Booking | All Rights Reserved</p>
+</footer>
+
+<script src="script.js"></script>
+
 </body>
 </html>
