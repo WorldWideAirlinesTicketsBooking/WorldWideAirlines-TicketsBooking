@@ -1714,7 +1714,7 @@
                 <div class="empty-results">
 
                     <h3>
-                        Live Flight API Not Connected
+                        Submit your travel request and our team will contact you with the best available fare.
                     </h3>
 
                     <p style="margin-top:10px;">
