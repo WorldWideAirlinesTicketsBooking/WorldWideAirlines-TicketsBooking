@@ -1657,6 +1657,8 @@
                     to an authorized flight provider/API and secure backend.
                 </p>
 
+                <p id="airlabsNotice" class="booking-note">AirLabs schedule/status data will be loaded through the secure Vercel API proxy. Fares and ticket issuance require a separate authorized booking provider.</p>
+
             </div>
 
         </div>
@@ -2186,7 +2188,7 @@
                         <strong>Email</strong>
 
                         <p>
-                   <ahref="mailto:worldwideairlinesticketsbookin@gmail.com">
+                   <a href="mailto:worldwideairlinesticketsbookin@gmail.com">
                                 worldwideairlinesticketsbookin@gmail.com
                             </a>
                         </p>
@@ -2605,28 +2607,10 @@
         );
 
 
-        function loadAirlines() {
-
-            const select =
-                document.getElementById("airline");
-
-            if (!select) return;
-
-            select.innerHTML =
-                '<option value="">Any Airline</option>';
-
-            airlines.forEach(airline => {
-
-                const option =
-                    document.createElement("option");
-
-                option.value = airline;
-                option.textContent = airline;
-
-                select.appendChild(option);
-
-            });
-
+        async function loadAirlines() {
+            const select=document.getElementById("airline"); if(!select) return;
+            try { const response=await fetch("/api/airlabs?type=airlines"); const data=await response.json(); const list=Array.isArray(data.airlines)?data.airlines:[]; if(list.length){ airlines.splice(0,airlines.length,...list.map(a=>a.name||a.iata_code||a.icao_code).filter(Boolean).sort((a,b)=>a.localeCompare(b))); } } catch(e){ console.warn("AirLabs airline catalog unavailable; using built-in list."); }
+            select.innerHTML='<option value="">Any Airline</option>'; airlines.forEach(airline=>{const option=document.createElement("option");option.value=airline;option.textContent=airline;select.appendChild(option);});
         }
 
 
@@ -3666,128 +3650,15 @@
         }
 
 
-        function setupOneAirportAutocomplete(
-            inputId,
-            suggestionId
-        ) {
-
-            const input =
-                document.getElementById(inputId);
-
-            const box =
-                document.getElementById(suggestionId);
-
-            if (!input || !box) return;
-
-            input.addEventListener(
-                "input",
-                () => {
-
-                    const query =
-                        input.value
-                            .trim()
-                            .toLowerCase();
-
-                    if (!query) {
-
-                        box.innerHTML = "";
-                        box.classList.remove("active");
-                        return;
-
-                    }
-
-                    const matches =
-                        airports
-                            .filter(airport => {
-
-                                const searchable =
-                                    `${airport.code}
-                                     ${airport.city}
-                                     ${airport.country}
-                                     ${airport.name}`
-                                        .toLowerCase();
-
-                                return searchable.includes(query);
-
-                            })
-                            .slice(0, 8);
-
-
-                    box.innerHTML =
-                        matches.map(airport => `
-
-                            <button
-                                type="button"
-                                class="airport-option"
-                                data-code="${escapeHtml(airport.code)}"
-                                data-city="${escapeHtml(airport.city)}"
-                            >
-
-                                <span class="airport-main">
-
-                                    <strong>
-                                        ${escapeHtml(airport.city)}
-                                    </strong>
-
-                                    <small>
-                                        ${escapeHtml(airport.name)}
-                                        ·
-                                        ${escapeHtml(airport.country)}
-                                    </small>
-
-                                </span>
-
-                                <span class="airport-code">
-                                    ${escapeHtml(airport.code)}
-                                </span>
-
-                            </button>
-
-                        `).join("");
-
-
-                    if (matches.length) {
-                        box.classList.add("active");
-                    } else {
-                        box.classList.remove("active");
-                    }
-
-
-                    box.querySelectorAll(".airport-option")
-                        .forEach(button => {
-
-                            button.addEventListener(
-                                "click",
-                                () => {
-
-                                    input.value =
-                                        `${button.dataset.city}
-                                         (${button.dataset.code})`;
-
-                                    box.classList.remove("active");
-
-                                }
-                            );
-
-                        });
-
-                }
-            );
-
-
-            input.addEventListener(
-                "focus",
-                () => {
-
-                    if (input.value.trim()) {
-                        input.dispatchEvent(
-                            new Event("input")
-                        );
-                    }
-
-                }
-            );
-
+        function setupOneAirportAutocomplete(inputId, suggestionId) {
+            const input=document.getElementById(inputId), box=document.getElementById(suggestionId); if(!input||!box) return; let timer;
+            input.addEventListener("input",()=>{ clearTimeout(timer); const query=input.value.trim(); if(!query){box.innerHTML="";box.classList.remove("active");return;} timer=setTimeout(async()=>{
+                try { const response=await fetch(`/api/airlabs?type=suggest&q=${encodeURIComponent(query)}`); const data=await response.json(); const matches=Array.isArray(data.airports)?data.airports.slice(0,8):[];
+                    box.innerHTML=matches.map(a=>{const code=a.iata_code||a.iata||a.code||"",city=a.city||a.name||"",country=a.country||a.country_code||"",name=a.name||city; return `<button type="button" class="airport-option" data-code="${escapeHtml(code)}" data-city="${escapeHtml(city)}"><span class="airport-main"><strong>${escapeHtml(city)}</strong><small>${escapeHtml(name)} · ${escapeHtml(country)}</small></span><span class="airport-code">${escapeHtml(code)}</span></button>`;}).join("");
+                    box.classList.toggle("active",matches.length>0); box.querySelectorAll(".airport-option").forEach(btn=>btn.addEventListener("click",()=>{input.value=`${btn.dataset.city} (${btn.dataset.code})`;box.classList.remove("active");}));
+                } catch(e){box.innerHTML="";box.classList.remove("active");}
+            },250); });
+            input.addEventListener("focus",()=>{if(input.value.trim()) input.dispatchEvent(new Event("input"));});
         }
 
 
@@ -3937,269 +3808,36 @@
         ========================================================= */
 
         async function searchFlights() {
-
-            const from =
-                document.getElementById("from")
-                    ?.value.trim();
-
-            const to =
-                document.getElementById("to")
-                    ?.value.trim();
-
-            const departure =
-                document.getElementById("departure")
-                    ?.value;
-
-            const returnDate =
-                document.getElementById("returnDate")
-                    ?.value;
-
-            const tripType =
-                document.querySelector(
-                    'input[name="trip"]:checked'
-                )?.value || "round_trip";
-
-            const adults =
-                Number(
-                    document.getElementById("Adults")
-                        ?.value || 1
-                );
-
-            const youths =
-                Number(
-                    document.getElementById("Youths")
-                        ?.value || 0
-                );
-
-            const children =
-                Number(
-                    document.getElementById("Childrens")
-                        ?.value || 0
-                );
-
-            const infants =
-                Number(
-                    document.getElementById("Infants")
-                        ?.value || 0
-                );
-
-            const cabin =
-                document.getElementById("cabinClass")
-                    ?.value || "Economy";
-
-            const airline =
-                document.getElementById("airline")
-                    ?.value || "";
-
-
-            if (!from || !to || !departure) {
-
-                showToast(
-                    "Please enter From, To and Departure Date."
-                );
-
-                return;
-
-            }
-
-
-            if (
-                tripType === "round_trip" &&
-                !returnDate
-            ) {
-
-                showToast(
-                    "Please select a return date."
-                );
-
-                return;
-
-            }
-
-
-            if (from.toLowerCase() === to.toLowerCase()) {
-
-                showToast(
-                    "Departure and destination cannot be the same."
-                );
-
-                return;
-
-            }
-
-
-            if (
-                tripType === "round_trip" &&
-                returnDate < departure
-            ) {
-
-                showToast(
-                    "Return date cannot be before departure date."
-                );
-
-                return;
-
-            }
-
-
-            const searchButton =
-                document.getElementById("searchButton");
-
-            searchButton?.classList.add("loading");
-
-            if (searchButton) {
-                searchButton.textContent =
-                    "⏳ Searching Flights...";
-            }
-
-
-            const payload = {
-
-                tripType,
-
-                origin: from,
-                destination: to,
-
-                departureDate: departure,
-                returnDate:
-                    tripType === "one_way"
-                        ? null
-                        : returnDate,
-
-                passengers: {
-                    adults,
-                    youths,
-                    children,
-                    infants
-                },
-
-                cabinClass: cabin,
-                airline
-
-            };
-
-
+            const from = document.getElementById("from")?.value.trim();
+            const to = document.getElementById("to")?.value.trim();
+            const departure = document.getElementById("departure")?.value;
+            const returnDate = document.getElementById("returnDate")?.value;
+            const tripType = document.querySelector('input[name="trip"]:checked')?.value || "round_trip";
+            const adults = Number(document.getElementById("Adults")?.value || 1);
+            const youths = Number(document.getElementById("Youths")?.value || 0);
+            const children = Number(document.getElementById("Childrens")?.value || 0);
+            const infants = Number(document.getElementById("Infants")?.value || 0);
+            const cabin = document.getElementById("cabinClass")?.value || "Economy";
+            const airline = document.getElementById("airline")?.value || "";
+            if (!from || !to || !departure) return showToast("Please enter From, To and Departure Date.");
+            if (tripType === "round_trip" && !returnDate) return showToast("Please select a return date.");
+            if (from.toLowerCase() === to.toLowerCase()) return showToast("Departure and destination cannot be the same.");
+            if (tripType === "round_trip" && returnDate < departure) return showToast("Return date cannot be before departure date.");
+            const button=document.getElementById("searchButton"); button?.classList.add("loading"); if(button) button.textContent="⏳ Searching AirLabs...";
             try {
-
-                /*
-                 * OPTIONAL REAL BACKEND
-                 *
-                 * Connect this endpoint to your authorized
-                 * flight provider.
-                 */
-
-                const response =
-                    await fetch(
-                        "/api/flights/search",
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-                            body:
-                                JSON.stringify(payload)
-                        }
-                    );
-
-
-                if (!response.ok) {
-                    throw new Error(
-                        "Flight API unavailable"
-                    );
-                }
-
-
-                const data =
-                    await response.json();
-
-                renderFlightResults(
-                    data.flights ||
-                    data.results ||
-                    []
-                );
-
-            } catch (error) {
-
-                /*
-                 * IMPORTANT:
-                 * This does NOT pretend that real flights
-                 * were found. It clearly tells the visitor
-                 * that the API is not connected.
-                 */
-
-                showBackendConnectionMessage();
-
-            } finally {
-
-                searchButton?.classList.remove(
-                    "loading"
-                );
-
-                if (searchButton) {
-                    searchButton.textContent =
-                        "🔎 Search Flights";
-                }
-
-            }
-
+                const response=await fetch("/api/airlabs",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({tripType,origin:from,destination:to,departureDate:departure,returnDate:tripType==="one_way"?null:returnDate,passengers:{adults,youths,children,infants},cabinClass:cabin,airline})});
+                const data=await response.json().catch(()=>({}));
+                if(!response.ok) throw new Error(data.error||"AirLabs request failed");
+                renderFlightResults(data.flights||[]);
+                const note=document.getElementById("airlabsNotice"); if(note) note.textContent=data.notice||"AirLabs schedule data loaded.";
+            } catch(error) { showAirLabsConnectionMessage(error.message); }
+            finally { button?.classList.remove("loading"); if(button) button.textContent="🔎 Search Flights"; }
         }
 
-
-        function showBackendConnectionMessage() {
-
-            const section =
-                document.getElementById(
-                    "flightResultsSection"
-                );
-
-            const list =
-                document.getElementById(
-                    "resultsList"
-                );
-
-            const summary =
-                document.getElementById(
-                    "resultsSummary"
-                );
-
-            section.classList.add("active");
-
-            summary.textContent =
-                "Flight search request prepared.";
-
-            list.innerHTML = `
-
-                <div class="empty-results">
-
-                    <h3>
-                        Live Flight API Not Connected
-                    </h3>
-
-                    <p style="margin-top:10px;">
-
-                        Your search form is working, but
-                        <strong>/api/flights/search</strong>
-                        is not connected to a live flight provider.
-
-                    </p>
-
-                    <p style="margin-top:10px;">
-
-                        Connect this endpoint to an authorized
-                        flight API/backend to display real-time
-                        flight inventory, fares and availability.
-
-                    </p>
-
-                </div>
-
-            `;
-
-            section.scrollIntoView({
-                behavior: "smooth"
-            });
-
+        function showAirLabsConnectionMessage(message="AirLabs could not return flight data.") {
+            const section=document.getElementById("flightResultsSection"), list=document.getElementById("resultsList"), summary=document.getElementById("resultsSummary");
+            if(!section||!list||!summary) return; section.classList.add("active"); summary.textContent="AirLabs flight search";
+            list.innerHTML=`<div class="empty-results"><h3>Flight Search Unavailable</h3><p style="margin-top:10px;">${escapeHtml(message)}</p><p style="margin-top:10px;">Check your Vercel deployment and AIRLABS_API_KEY environment variable.</p></div>`; section.scrollIntoView({behavior:"smooth"});
         }
 
 
