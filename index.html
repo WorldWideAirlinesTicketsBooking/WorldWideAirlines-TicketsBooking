@@ -805,7 +805,110 @@
             font-size: 75px;
             margin-bottom: 15px;
         }
-        
+
+        /* =========================================================
+           PAYMENT
+        ========================================================= */
+
+        .payment {
+            background: #f4f8fc;
+        }
+
+        .payment-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .payment-card {
+            background: white;
+            border: 1px solid #e3ebef;
+            border-radius: 17px;
+            padding: 27px;
+            box-shadow: 0 6px 22px rgba(0, 35, 55, .06);
+        }
+
+        .payment-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .payment-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .payment-card > p {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .bank-details {
+            display: grid;
+            gap: 10px;
+        }
+
+        .bank-row {
+            padding: 10px 0;
+            border-bottom: 1px solid #edf1f3;
+        }
+
+        .bank-row span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .bank-row strong {
+            color: #263a45;
+            word-break: break-word;
+        }
+
+        .copy-btn,
+        .payment-action {
+            width: 100%;
+            border: 0;
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 9px;
+            background: var(--primary);
+            color: white;
+            font-weight: 800;
+        }
+
+        .copy-btn:hover,
+        .payment-action:hover {
+            background: var(--primary-dark);
+        }
+
+        .payment-form input,
+        .payment-form select,
+        .payment-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .payment-form textarea {
+            resize: vertical;
+        }
+
+        .payment-note {
+            max-width: 1150px;
+            margin: 25px auto 0;
+            padding: 16px 18px;
+            background: #fff9ed;
+            border: 1px solid #f2d49d;
+            color: #76520d;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
         /* =========================================================
            CONTACT
         ========================================================= */
@@ -1271,7 +1374,6 @@
                 <a href="#destinations">Destinations</a>
                 <a href="#airlines">Airlines</a>
                 <a href="#about">About</a>
-                <a href="#payment">Payment</a>
                 <a href="#faq">FAQ</a>
                 <a href="#contact">Contact</a>
             </nav>
@@ -1867,248 +1969,6 @@
 
     </section>
 
-
-    <!-- =========================================================
-         PAYMENT
-    ========================================================= -->
-
-    <section
-        class="payment"
-        id="payment"
-    >
-
-        <div class="section-title">
-
-            <span class="section-kicker">
-                Booking Payment
-            </span>
-
-            <h2>Secure Booking & Payment</h2>
-
-            <p>
-                Choose your payment method and follow the instructions
-                provided for your booking.
-            </p>
-
-        </div>
-
-
-        <div class="payment-grid">
-
-            <!-- BANK TRANSFER -->
-
-            <div class="payment-card">
-
-                <div class="payment-icon">🏦</div>
-
-                <h3>Bank Transfer</h3>
-
-                <p>
-                    Use your business banking details for manual
-                    booking payments.
-                </p>
-
-
-                <div class="bank-details">
-
-                    <div class="bank-row">
-                        <span>Account Name</span>
-                        <strong id="accountName">
-                            YOUR BUSINESS NAME
-                        </strong>
-                    </div>
-
-                    <div class="bank-row">
-                        <span>Bank Name</span>
-                        <strong id="bankName">
-                            YOUR BANK NAME
-                        </strong>
-                    </div>
-
-                    <div class="bank-row">
-                        <span>IBAN</span>
-                        <strong id="iban">
-                            YOUR IBAN HERE
-                        </strong>
-                    </div>
-
-                    <div class="bank-row">
-                        <span>Account Number</span>
-                        <strong id="accountNumber">
-                            YOUR ACCOUNT NUMBER
-                        </strong>
-                    </div>
-
-                    <div class="bank-row">
-                        <span>SWIFT / BIC</span>
-                        <strong id="swift">
-                            YOUR SWIFT / BIC
-                        </strong>
-                    </div>
-
-                    <div class="bank-row">
-                        <span>Payment Reference</span>
-                        <strong>
-                            BOOKING-XXXX
-                        </strong>
-                    </div>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="copy-btn"
-                    onclick="copyIBAN()"
-                >
-                    📋 Copy IBAN
-                </button>
-
-            </div>
-
-
-            <!-- SECURE GATEWAY -->
-
-            <div class="payment-card">
-
-                <div class="payment-icon">💳</div>
-
-                <h3>Secure Card Payment</h3>
-
-                <p>
-                    Connect the website to Stripe, PayPal or your
-                    bank's merchant gateway before accepting real
-                    card payments.
-                </p>
-
-                <button
-                    type="button"
-                    class="payment-action"
-                    onclick="startSecurePayment()"
-                >
-                    🔐 Connect Secure Gateway
-                </button>
-
-            </div>
-
-
-            <!-- PAYMENT CONFIRMATION -->
-
-            <div class="payment-card">
-
-                <div class="payment-icon">📄</div>
-
-                <h3>Payment Confirmation</h3>
-
-                <form
-                    class="payment-form"
-                    onsubmit="submitPaymentDetails(event)"
-                >
-
-                    <input
-                        type="text"
-                        id="paymentBookingReference"
-                        placeholder="Booking Reference"
-                        required
-                    >
-
-                    <input
-                        type="text"
-                        id="paymentFullName"
-                        placeholder="Full Name"
-                        required
-                    >
-
-                    <input
-                        type="email"
-                        id="paymentEmail"
-                        placeholder="Email Address"
-                        required
-                    >
-
-                    <input
-                        type="tel"
-                        id="paymentPhone"
-                        placeholder="Phone Number"
-                        required
-                    >
-
-                    <input
-                        type="number"
-                        id="paymentAmount"
-                        placeholder="Payment Amount"
-                        min="0"
-                        step="0.01"
-                        required
-                    >
-
-                    <select
-                        id="paymentMethod"
-                        required
-                    >
-                        <option value="">
-                            Select Payment Method
-                        </option>
-                        <option value="Bank Transfer">
-                            Bank Transfer
-                        </option>
-                        <option value="PayPal">
-                            PayPal
-                        </option>
-                        <option value="Card Gateway">
-                            Card Gateway
-                        </option>
-                        <option value="Other">
-                            Other
-                        </option>
-                    </select>
-
-                    <input
-                        type="text"
-                        id="transactionId"
-                        placeholder="Transaction ID"
-                        required
-                    >
-
-                    <textarea
-                        id="paymentNotes"
-                        rows="3"
-                        placeholder="Additional notes"
-                    ></textarea>
-
-                    <button
-                        type="submit"
-                        class="payment-action"
-                    >
-                        Submit Payment Details
-                    </button>
-
-                </form>
-
-            </div>
-
-        </div>
-
-
-        <div class="payment-note">
-
-            <strong>Important:</strong>
-            The bank details above are placeholders.
-            Replace them with your actual business banking details
-            before publishing the website.
-
-            Never place your banking password, PIN, OTP or other
-            private security credentials on a public website.
-
-            This front-end form does not itself process or verify
-            payments. Connect it to a secure backend/payment gateway
-            before accepting real payments.
-
-        </div>
-
-    </section>
-
-
     <!-- =========================================================
          FAQ
     ========================================================= -->
@@ -2443,7 +2303,6 @@
                 <a href="#destinations">Destinations</a>
                 <a href="#airlines">Airlines</a>
                 <a href="#about">About</a>
-                <a href="#payment">Payment</a>
                 <a href="#faq">FAQ</a>
                 <a href="#contact">Contact</a>
 
