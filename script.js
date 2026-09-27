@@ -1631,7 +1631,7 @@
 
                 const response =
                     await fetch(
-                        "/api/flights/search",
+                        "/api/airlabs",
                         {
                             method: "POST",
                             headers: {
